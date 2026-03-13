@@ -89,8 +89,27 @@ export default function Navbar() {
       </header>
 
       {/* ── Mobile Bottom Navigation (App-style) ─────────── */}
+
+      {/* Blur overlay strip — blurs only the page content behind the nav */}
+      <div
+        className="md:hidden fixed bottom-0 inset-x-0 h-36 z-40 pointer-events-none"
+        style={{
+          WebkitMaskImage: "linear-gradient(to top, black 60%, transparent 100%)",
+          maskImage: "linear-gradient(to top, black 60%, transparent 100%)",
+          backdropFilter: "blur(16px)",
+        }}
+      />
+
       <nav className="md:hidden fixed bottom-5 inset-x-0 z-50 flex justify-center pointer-events-none">
-        <div className="pointer-events-auto flex items-center gap-1 bg-background/75 dark:bg-neutral-900/80 backdrop-blur-2xl border border-border rounded-2xl p-1.5 shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
+        <div
+          className="pointer-events-auto flex items-center gap-1.5 rounded-3xl p-2"
+          style={{
+            background: "hsl(var(--background))",
+            boxShadow:
+              "0 8px 32px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.07)",
+            border: "1px solid hsl(var(--border))",
+          }}
+        >
           {links.map((link) => {
             const Icon = link.icon;
             const isActive = activeTab === link.href;
@@ -104,17 +123,17 @@ export default function Navbar() {
                 {isActive && (
                   <motion.div
                     layoutId="mobile-pill"
-                    className="absolute inset-0 bg-primary rounded-xl"
+                    className="absolute inset-0 bg-primary rounded-2xl"
                     transition={{ type: "spring", stiffness: 400, damping: 35 }}
                   />
                 )}
                 <div
                   className={cn(
-                    "relative z-10 flex flex-col items-center justify-center gap-1 w-16 h-14 rounded-xl transition-colors duration-200",
-                    isActive ? "text-white" : "text-foreground/40"
+                    "relative z-10 flex flex-col items-center justify-center gap-1 w-[72px] h-[54px] rounded-2xl transition-colors duration-200",
+                    isActive ? "text-white" : "text-foreground/40 hover:text-foreground/70"
                   )}
                 >
-                  <Icon size={18} strokeWidth={isActive ? 2.5 : 1.8} />
+                  <Icon size={19} strokeWidth={isActive ? 2.2 : 1.6} />
                   <span className="text-[10px] font-semibold tracking-wide leading-none">
                     {link.label}
                   </span>
