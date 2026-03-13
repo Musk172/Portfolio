@@ -37,7 +37,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Mobile Top Bar: Logo + Theme Toggle ─────────── */}
+      {/* ── Mobile Top Bar: Logo only ────────────────────── */}
       <div
         className={cn(
           "md:hidden fixed top-0 inset-x-0 z-40 flex items-center justify-between px-5 transition-all duration-500",
@@ -50,9 +50,6 @@ export default function Navbar() {
         <Link href="/" className="font-mono font-bold text-xl tracking-tighter">
           V<span className="text-primary">.</span>26
         </Link>
-
-        {/* Day/Night toggle with animated sun/moon label */}
-        <ThemeToggle />
       </div>
 
       {/* ── Desktop Top Bar ──────────────────────────────── */}
