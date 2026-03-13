@@ -4,7 +4,15 @@ import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { User, Briefcase, Grid, MessageSquare } from "lucide-react";
+import { Home, Layers, Mail, BookOpen } from "lucide-react";
+import { motion } from "framer-motion";
+
+const links = [
+  { label: "Home",     href: "#hero",     icon: Home },
+  { label: "About",    href: "#about",    icon: BookOpen },
+  { label: "Work",     href: "#projects", icon: Layers },
+  { label: "Contact",  href: "#contact",  icon: Mail },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -13,101 +21,104 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      
-      // Basic scroll spy for active tab
-      const sections = ["#hero", "#about", "#projects", "#contact"];
-      for (const section of sections.reverse()) {
+      const sections = links.map(l => l.href);
+      for (const section of [...sections].reverse()) {
         const el = document.querySelector(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveTab(section);
-            break;
-          }
+        if (el && el.getBoundingClientRect().top <= 150) {
+          setActiveTab(section);
+          break;
         }
       }
     };
-    
-    // Initial check
     handleScroll();
-    
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const links = [
-    { label: "Identity", href: "#hero", icon: <User size={20} /> },
-    { label: "Workshop", href: "#about", icon: <Briefcase size={20} /> },
-    { label: "Lab", href: "#projects", icon: <Grid size={20} /> },
-    { label: "Contact", href: "#contact", icon: <MessageSquare size={20} /> },
-  ];
-
   return (
     <>
-      {/* Top Navbar */}
+      {/* ── Desktop Top Bar ─────────────────────────────── */}
       <header
         className={cn(
-          "fixed top-0 inset-x-0 z-40 transition-all duration-300 pointer-events-none",
-          scrolled ? "py-4 md:bg-background/80 md:backdrop-blur-md" : "py-8"
+          "fixed top-0 inset-x-0 z-40 transition-all duration-500 pointer-events-none",
+          scrolled ? "py-4" : "py-8"
         )}
       >
         <div className="container mx-auto px-6 md:px-12 flex items-center justify-between pointer-events-auto">
-          <Link href="/" className="group relative z-50">
-            <span className="font-mono font-bold text-xl tracking-tighter">
-              V<span className="text-primary">.</span>26
-            </span>
+          <Link href="/" className="font-mono font-bold text-xl tracking-tighter z-50">
+            V<span className="text-primary">.</span>26
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8 glass px-6 py-2 rounded-full border border-border shadow-sm">
+          {/* Desktop links */}
+          <nav
+            className={cn(
+              "hidden md:flex items-center gap-8 px-7 py-2.5 rounded-full border transition-all duration-500",
+              scrolled
+                ? "bg-background/70 backdrop-blur-xl border-border shadow-lg"
+                : "bg-transparent border-transparent"
+            )}
+          >
             {links.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className={cn(
-                  "text-sm font-medium transition-colors duration-200 py-1",
-                  activeTab === link.href ? "text-primary" : "text-foreground hover:text-primary"
-                )}
                 onClick={() => setActiveTab(link.href)}
+                className={cn(
+                  "relative text-sm font-medium transition-colors duration-200 py-1",
+                  activeTab === link.href
+                    ? "text-foreground"
+                    : "text-foreground/50 hover:text-foreground"
+                )}
               >
                 {link.label}
+                {activeTab === link.href && (
+                  <motion.span
+                    layoutId="desktop-indicator"
+                    className="absolute -bottom-0.5 left-0 right-0 h-px bg-primary rounded-full"
+                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                  />
+                )}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-4 z-50 pointer-events-auto">
+          <div className="flex items-center z-50 pointer-events-auto">
             <ThemeToggle />
           </div>
         </div>
       </header>
 
-      {/* Mobile Bottom Navigation - App Style */}
-      <nav className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-background/80 backdrop-blur-xl rounded-full border border-border p-2 z-50 shadow-2xl safe-area-bottom">
-        <div className="flex justify-around items-center">
+      {/* ── Mobile Bottom Navigation (App-style) ─────────── */}
+      <nav className="md:hidden fixed bottom-5 inset-x-0 z-50 flex justify-center pointer-events-none">
+        <div className="pointer-events-auto flex items-center gap-1 bg-background/75 dark:bg-neutral-900/80 backdrop-blur-2xl border border-border rounded-2xl p-1.5 shadow-[0_8px_40px_rgba(0,0,0,0.25)]">
           {links.map((link) => {
+            const Icon = link.icon;
             const isActive = activeTab === link.href;
             return (
               <Link
-                key={link.label}
+                key={link.href}
                 href={link.href}
                 onClick={() => setActiveTab(link.href)}
-                className={cn(
-                  "flex flex-col items-center justify-center w-16 h-14 rounded-full transition-all duration-300 relative group",
-                  isActive ? "text-primary" : "text-foreground/50 hover:text-foreground"
-                )}
+                className="relative"
               >
                 {isActive && (
-                  <span className="absolute inset-0 bg-primary/10 rounded-full transition-all duration-300" />
+                  <motion.div
+                    layoutId="mobile-pill"
+                    className="absolute inset-0 bg-primary rounded-xl"
+                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                  />
                 )}
-                <div className={cn("transition-transform duration-300", isActive ? "-translate-y-2" : "")}>
-                  {link.icon}
+                <div
+                  className={cn(
+                    "relative z-10 flex flex-col items-center justify-center gap-1 w-16 h-14 rounded-xl transition-colors duration-200",
+                    isActive ? "text-white" : "text-foreground/40"
+                  )}
+                >
+                  <Icon size={18} strokeWidth={isActive ? 2.5 : 1.8} />
+                  <span className="text-[10px] font-semibold tracking-wide leading-none">
+                    {link.label}
+                  </span>
                 </div>
-                <span className={cn(
-                  "text-[10px] font-medium absolute bottom-1 opacity-0 transition-all duration-300 translate-y-2",
-                  isActive && "opacity-100 translate-y-0"
-                )}>
-                  {link.label}
-                </span>
               </Link>
             );
           })}
