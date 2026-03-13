@@ -10,12 +10,12 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const mono = Space_Mono({ weight: ["400", "700"], subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "Creative Developer Portfolio 2026",
-  description: "A dark-themed, magazine-style layout portfolio showcasing React & Next.js projects.",
-  keywords: ["React Developer Portfolio 2026", "Next.js 14", "Frontend Developer", "Creative Coding"],
+  title: "Pritam Verma — Developer & AI Automation",
+  description: "Portfolio of Pritam Verma — Full-Stack Developer specialising in web, app development, and AI automation.",
+  keywords: ["Pritam Verma", "React Developer Portfolio 2026", "Next.js 14", "Full Stack Developer", "AI Automation"],
   openGraph: {
-    title: "Creative Developer Portfolio",
-    description: "A dark-themed, magazine-style layout portfolio.",
+    title: "Pritam Verma",
+    description: "Full-Stack Developer & AI Automation specialist.",
     type: "website",
   },
 };

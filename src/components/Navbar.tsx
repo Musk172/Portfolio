@@ -48,7 +48,7 @@ export default function Navbar() {
       >
         {/* Logo */}
         <Link href="/" className="font-mono font-bold text-xl tracking-tighter">
-          V<span className="text-primary">.</span>26
+          PV<span className="text-primary">.</span>
         </Link>
       </div>
 
@@ -61,7 +61,7 @@ export default function Navbar() {
       >
         <div className="container mx-auto px-6 md:px-12 flex items-center justify-between pointer-events-auto">
           <Link href="/" className="font-mono font-bold text-xl tracking-tighter z-50">
-            V<span className="text-primary">.</span>26
+            PV<span className="text-primary">.</span>
           </Link>
 
           {/* Desktop links */}
