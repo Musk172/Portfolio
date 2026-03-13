@@ -40,14 +40,14 @@ export default function Navbar() {
       {/* ── Mobile Top Bar: Logo only ────────────────────── */}
       <div
         className={cn(
-          "md:hidden fixed top-0 inset-x-0 z-40 flex items-center justify-between px-5 transition-all duration-500",
+          "md:hidden fixed top-0 inset-x-0 z-40 flex items-center justify-between pl-4 pr-4 transition-all duration-500",
           scrolled
             ? "py-3 bg-background/80 backdrop-blur-xl border-b border-border shadow-sm"
             : "py-5 bg-transparent"
         )}
       >
-        {/* Logo */}
-        <Link href="/" className="font-mono font-bold text-xl tracking-tighter">
+        {/* Logo — bigger, anchored to far left */}
+        <Link href="/" className="font-mono font-bold text-2xl tracking-tighter">
           PV<span className="text-primary">.</span>
         </Link>
       </div>
@@ -59,8 +59,8 @@ export default function Navbar() {
           scrolled ? "py-4" : "py-8"
         )}
       >
-        <div className="container mx-auto px-6 md:px-12 flex items-center justify-between pointer-events-auto">
-          <Link href="/" className="font-mono font-bold text-xl tracking-tighter z-50">
+        <div className="w-full px-4 md:px-8 flex items-center justify-between pointer-events-auto">
+          <Link href="/" className="font-mono font-bold text-2xl tracking-tighter z-50">
             PV<span className="text-primary">.</span>
           </Link>
 
