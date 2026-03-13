@@ -8,10 +8,10 @@ import { Home, Layers, Mail, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 
 const links = [
-  { label: "Home",     href: "#hero",     icon: Home },
-  { label: "About",    href: "#about",    icon: BookOpen },
-  { label: "Work",     href: "#projects", icon: Layers },
-  { label: "Contact",  href: "#contact",  icon: Mail },
+  { label: "Home",    href: "#hero",     icon: Home },
+  { label: "About",   href: "#about",    icon: BookOpen },
+  { label: "Work",    href: "#projects", icon: Layers },
+  { label: "Contact", href: "#contact",  icon: Mail },
 ];
 
 export default function Navbar() {
@@ -21,7 +21,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      const sections = links.map(l => l.href);
+      const sections = links.map((l) => l.href);
       for (const section of [...sections].reverse()) {
         const el = document.querySelector(section);
         if (el && el.getBoundingClientRect().top <= 150) {
@@ -37,10 +37,28 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Desktop Top Bar ─────────────────────────────── */}
+      {/* ── Mobile Top Bar: Logo + Theme Toggle ─────────── */}
+      <div
+        className={cn(
+          "md:hidden fixed top-0 inset-x-0 z-40 flex items-center justify-between px-5 transition-all duration-500",
+          scrolled
+            ? "py-3 bg-background/80 backdrop-blur-xl border-b border-border shadow-sm"
+            : "py-5 bg-transparent"
+        )}
+      >
+        {/* Logo */}
+        <Link href="/" className="font-mono font-bold text-xl tracking-tighter">
+          V<span className="text-primary">.</span>26
+        </Link>
+
+        {/* Day/Night toggle with animated sun/moon label */}
+        <ThemeToggle />
+      </div>
+
+      {/* ── Desktop Top Bar ──────────────────────────────── */}
       <header
         className={cn(
-          "fixed top-0 inset-x-0 z-40 transition-all duration-500 pointer-events-none",
+          "hidden md:block fixed top-0 inset-x-0 z-40 transition-all duration-500 pointer-events-none",
           scrolled ? "py-4" : "py-8"
         )}
       >
@@ -52,7 +70,7 @@ export default function Navbar() {
           {/* Desktop links */}
           <nav
             className={cn(
-              "hidden md:flex items-center gap-8 px-7 py-2.5 rounded-full border transition-all duration-500",
+              "flex items-center gap-8 px-7 py-2.5 rounded-full border transition-all duration-500",
               scrolled
                 ? "bg-background/70 backdrop-blur-xl border-border shadow-lg"
                 : "bg-transparent border-transparent"
@@ -88,9 +106,9 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* ── Mobile Bottom Navigation (App-style) ─────────── */}
+      {/* ── Mobile Bottom Navigation ─────────────────────── */}
 
-      {/* Blur overlay strip — blurs only the page content behind the nav */}
+      {/* Blurred strip behind the nav (mobile only) */}
       <div
         className="md:hidden fixed bottom-0 inset-x-0 h-36 z-40 pointer-events-none"
         style={{
@@ -101,8 +119,9 @@ export default function Navbar() {
       />
 
       <nav className="md:hidden fixed bottom-5 inset-x-0 z-50 flex justify-center pointer-events-none">
+        {/* Outer wrapper: Logo | Tabs | Theme — all in one pill */}
         <div
-          className="pointer-events-auto flex items-center gap-1.5 rounded-3xl p-2"
+          className="pointer-events-auto flex items-center gap-1 rounded-3xl p-2"
           style={{
             background: "hsl(var(--background))",
             boxShadow:
@@ -110,6 +129,7 @@ export default function Navbar() {
             border: "1px solid hsl(var(--border))",
           }}
         >
+          {/* Nav Tab Buttons */}
           {links.map((link) => {
             const Icon = link.icon;
             const isActive = activeTab === link.href;
@@ -129,11 +149,13 @@ export default function Navbar() {
                 )}
                 <div
                   className={cn(
-                    "relative z-10 flex flex-col items-center justify-center gap-1 w-[72px] h-[54px] rounded-2xl transition-colors duration-200",
-                    isActive ? "text-white" : "text-foreground/40 hover:text-foreground/70"
+                    "relative z-10 flex flex-col items-center justify-center gap-1 w-[66px] h-[52px] rounded-2xl transition-colors duration-200",
+                    isActive
+                      ? "text-white"
+                      : "text-foreground/40 hover:text-foreground/70"
                   )}
                 >
-                  <Icon size={19} strokeWidth={isActive ? 2.2 : 1.6} />
+                  <Icon size={18} strokeWidth={isActive ? 2.2 : 1.6} />
                   <span className="text-[10px] font-semibold tracking-wide leading-none">
                     {link.label}
                   </span>
@@ -141,6 +163,14 @@ export default function Navbar() {
               </Link>
             );
           })}
+
+          {/* Thin divider line */}
+          <div className="w-px h-8 bg-border mx-0.5 shrink-0" />
+
+          {/* Theme Toggle Button */}
+          <div className="px-1">
+            <ThemeToggle />
+          </div>
         </div>
       </nav>
     </>
