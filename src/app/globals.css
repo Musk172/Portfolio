@@ -23,6 +23,12 @@
 @layer base {
   body {
     @apply bg-background text-foreground selection:bg-primary/30 antialiased overflow-x-hidden transition-colors duration-300;
+    cursor: none; /* hide default cursor — custom cursor handles this */
+  }
+
+  /* Restore pointer shape for accessibility on touch/non-cursor devices */
+  a, button, [role="button"], input, textarea, select, label {
+    cursor: none;
   }
 }
 
