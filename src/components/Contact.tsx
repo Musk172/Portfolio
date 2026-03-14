@@ -2,9 +2,15 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Send, Mail, MapPin, Clock, CheckCircle2 } from "lucide-react";
+import { Send, Mail, MapPin, Clock, CheckCircle2, LucideIcon } from "lucide-react";
 
-const ContactInfoItem = ({ icon: Icon, title, content }: { icon: any, title: string, content: string }) => (
+interface ContactInfoItemProps {
+  icon: LucideIcon;
+  title: string;
+  content: string;
+}
+
+const ContactInfoItem = ({ icon: Icon, title, content }: ContactInfoItemProps) => (
   <motion.div 
     initial={{ opacity: 0, x: -20 }}
     whileInView={{ opacity: 1, x: 0 }}
@@ -21,7 +27,17 @@ const ContactInfoItem = ({ icon: Icon, title, content }: { icon: any, title: str
   </motion.div>
 );
 
-const FloatingInput = ({ label, id, type = "text", required = false, value, onChange, placeholder }: any) => {
+interface FloatingInputProps {
+  label: string;
+  id: string;
+  type?: string;
+  required?: boolean;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  placeholder?: string;
+}
+
+const FloatingInput = ({ label, id, type = "text", required = false, value, onChange, placeholder }: FloatingInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   
   return (
@@ -253,3 +269,4 @@ export default function Contact() {
     </section>
   );
 }
+
