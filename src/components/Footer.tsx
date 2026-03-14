@@ -6,8 +6,8 @@ export default function Footer() {
       <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-center relative z-10">
         
         <div className="mb-12 md:mb-0">
-          <h2 className="text-4xl md:text-5xl font-bold font-sans tracking-tight mb-4">
-            Let&apos;s <span className="text-primary italic">connect</span>.
+          <h2 className="text-4xl md:text-5xl font-black font-sans tracking-tight mb-4">
+            Let&apos;s <span className="text-primary italic font-serif">connect</span>.
           </h2>
           <p className="max-w-md text-foreground/70 font-mono text-sm leading-relaxed mb-8">
             Always open to discussing product design, creative development, 

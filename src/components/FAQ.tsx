@@ -37,8 +37,8 @@ export default function FAQ() {
           
           <div className="lg:col-span-4 flex flex-col justify-start text-center md:text-left">
              <h2 className="text-sm font-mono tracking-widest text-primary mb-4 uppercase">Queries</h2>
-             <h3 className="text-4xl md:text-5xl font-bold font-sans tracking-tight mb-6">
-               Frequent <span className="text-primary italic">Questions</span>.
+             <h3 className="text-4xl md:text-5xl font-black font-sans tracking-tight mb-6">
+               Frequent <span className="text-primary italic font-serif">Questions</span>.
              </h3>
              <p className="text-foreground/60 font-mono text-sm max-w-sm mx-auto md:mx-0">
                 Can&apos;t find the answer you&apos;re looking for? Feel free to reach out via the contact form.
