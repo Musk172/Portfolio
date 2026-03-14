@@ -22,8 +22,18 @@ const config: Config = {
       },
       animation: {
         "glitch-noise": "glitch-noise 1s infinite linear alternate-reverse",
+        marquee: "marquee var(--duration) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
       keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
         "glitch-noise": {
           "0%": { clipPath: "inset(20% 0 80% 0)" },
           "20%": { clipPath: "inset(60% 0 10% 0)" },
