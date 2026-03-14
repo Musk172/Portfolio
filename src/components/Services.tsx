@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import React, { useRef, useState, useEffect } from "react";
 import NextImage from "next/image";
+import { cn } from "@/lib/utils";
 import { LayoutGrid, Cpu, Globe, Rocket, ArrowUpRight } from "lucide-react";
 
 const SERVICES = [
