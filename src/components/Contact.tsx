@@ -237,7 +237,7 @@ export default function Contact() {
                       >
                         <span className="relative z-10 flex items-center gap-3">
                           {status === "loading" ? "Sending..." : "Send Message"}
-                          <Send size={18} className={`transition-transform duration-300 ${status === 'loading' ? 'translate-x-10 opacity-0' : 'group-hover:translate-x-1 group-hover:-translate-y-1'}`} />
+                          <Send size={18} className={`transition-transform duration-300 ${status === "loading" ? "translate-x-10 opacity-0" : "group-hover:translate-x-1 group-hover:-translate-y-1"}`} />
                         </span>
                         
                         <motion.div 
@@ -269,4 +269,3 @@ export default function Contact() {
     </section>
   );
 }
-
