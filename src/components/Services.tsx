@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import NextImage from "next/image";
 import { LayoutGrid, Cpu, Globe, Rocket, ArrowUpRight } from "lucide-react";
 
