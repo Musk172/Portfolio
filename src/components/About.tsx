@@ -14,8 +14,8 @@ export default function About() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h2 className="text-sm font-mono tracking-widest text-primary mb-4 uppercase">Identity</h2>
-            <h3 className="text-4xl md:text-5xl font-bold font-sans tracking-tight mb-8">
-              A Bit About <span className="text-primary italic">Workshop</span>.
+            <h3 className="text-4xl md:text-5xl font-black font-sans tracking-tight mb-8">
+              A Bit About <span className="text-primary italic font-serif">Workshop</span>.
             </h3>
             
             <div className="space-y-6 text-foreground/80 font-inter text-lg">

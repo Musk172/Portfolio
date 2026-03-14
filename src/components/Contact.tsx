@@ -129,10 +129,10 @@ export default function Contact() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="text-5xl md:text-6xl font-bold font-sans tracking-tight mb-8"
+                className="text-5xl md:text-6xl font-black font-sans tracking-tight mb-8"
               >
                 Let&apos;s build <br />
-                something <span className="text-primary italic">great</span>.
+                something <span className="text-primary italic font-serif">great</span>.
               </motion.h3>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}

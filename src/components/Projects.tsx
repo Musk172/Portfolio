@@ -45,8 +45,8 @@ export default function Projects() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
           <div>
              <h2 className="text-sm font-mono tracking-widest text-primary mb-4 uppercase">Lab</h2>
-             <h3 className="text-4xl md:text-5xl font-bold font-sans tracking-tight">
-               Selected <span className="text-primary italic">Works</span>.
+             <h3 className="text-4xl md:text-5xl font-black font-sans tracking-tight">
+               Selected <span className="text-primary italic font-serif">Works</span>.
              </h3>
           </div>
           

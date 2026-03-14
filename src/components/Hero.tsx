@@ -26,12 +26,12 @@ export default function Hero() {
 
         
         <motion.h1 
-          className="text-5xl md:text-7xl lg:text-[8vw] leading-[1.1] font-bold font-sans tracking-tighter mb-6"
+          className="text-5xl md:text-7xl lg:text-[8vw] leading-[1.1] font-black font-sans tracking-tighter mb-6"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          Crafting <span className="text-primary italic">Digital</span><br />
+          Crafting <span className="text-primary italic font-serif">Digital</span><br />
           Experiences.
         </motion.h1>
         
