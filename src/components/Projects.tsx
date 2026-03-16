@@ -1,110 +1,93 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
-
-const PROJECTS = [
-  {
-    id: 1,
-    title: "Project Zero",
-    category: "Full Stack",
-    devTech: ["Next.js", "TypeScript", "Tailwind CSS"],
-    imageColor: "bg-blue-900/40",
-    desc: "A scalable full stack commerce solution with headless architecture.",
-  },
-  {
-    id: 2,
-    title: "Neon Nexus",
-    category: "WebGL",
-    devTech: ["Three.js", "React Three Fiber", "GSAP"],
-    imageColor: "bg-emerald-900/40",
-    desc: "Interactive 3D experience exploring modern web storytelling.",
-  },
-  {
-    id: 3,
-    title: "Dashboard UI",
-    category: "Frontend",
-    devTech: ["React", "Framer Motion", "Recharts"],
-    imageColor: "bg-purple-900/40",
-    desc: "Extremely fast, analytics-heavy admin dashboard.",
-  },
-];
+import { Button } from "@/components/ui/button";
+import { InteractiveAccordion } from "@/components/ui/interactive-image-accordion";
 
 export default function Projects() {
-  const [filter, setFilter] = useState("All");
-  
-  const categories = ["All", "Full Stack", "Frontend", "WebGL"];
-  
-  const filteredProjects = filter === "All" 
-    ? PROJECTS 
-    : PROJECTS.filter(p => p.category === filter);
-
   return (
-    <section id="projects" className="relative min-h-screen py-24 md:py-32 bg-background z-20">
+    <section id="projects" className="relative min-h-screen py-24 md:py-32 bg-background z-20 overflow-x-visible">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
-          <div>
-             <h2 className="text-sm font-mono tracking-widest text-primary mb-4 uppercase">Lab</h2>
-             <h3 className="text-4xl md:text-5xl font-black font-sans tracking-tight">
-               Selected <span className="text-primary italic font-serif">Works</span>.
-             </h3>
-          </div>
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
           
-          <div className="flex gap-2 flex-wrap">
-            {categories.map((c) => (
-              <button
-                key={c}
-                onClick={() => setFilter(c)}
-                className={`px-4 py-2 font-mono text-sm border rounded-full transition-colors duration-300 ${
-                  filter === c 
-                    ? "bg-primary border-primary text-white dark:text-black" 
-                    : "border-border text-foreground hover:border-primary/50"
-                }`}
+          {/* Left Side: Original Text Content */}
+          <div className="w-full lg:w-2/5 space-y-8">
+            <div className="flex flex-col space-y-4">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="flex items-center gap-4"
               >
-                {c}
-              </button>
-            ))}
-          </div>
-        </div>
+                <span className="h-[1px] w-12 bg-primary/40" />
+                <h2 className="text-xs font-mono tracking-[0.3em] text-primary uppercase">Portfolio</h2>
+              </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, idx) => (
+              <motion.h3
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
+              >
+                Selected <br />
+                <span className="text-primary italic font-serif">Works</span>.
+              </motion.h3>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-foreground/50 text-lg md:text-xl max-w-xl font-medium leading-relaxed"
+              >
+                A curated showcase of high-performance applications, architectural designs, and engineering experiments.
+              </motion.p>
+            </div>
+
             <motion.div
-              layout
-              key={project.id}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="group relative flex flex-col gap-4 border border-border p-4 rounded-3xl bg-surface/30 hover:bg-surface/60 transition-colors"
+              transition={{ delay: 0.2 }}
             >
-              <div className={`relative w-full aspect-[4/3] rounded-2xl overflow-hidden ${project.imageColor}`}>
-                {/* Image Placeholder */}
-                <div className="absolute inset-0 bg-transparent flex items-center justify-center opacity-30 mix-blend-overlay group-hover:scale-110 group-hover:opacity-60 transition-all duration-700">
-                  <div className="w-1/2 h-1/2 border border-white/20 rotate-45"></div>
-                </div>
-                
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 flex gap-2 flex-wrap z-10">
-                  {project.devTech.map((tech) => (
-                    <span key={tech} className="px-2 py-1 text-xs font-mono bg-white/10 backdrop-blur-md border border-white/20 rounded text-white shadow-sm">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="px-2 pb-2">
-                <div className="flex justify-between items-center mb-2">
-                  <h4 className="text-2xl font-bold tracking-tight">{project.title}</h4>
-                  <div className="w-10 h-10 rounded-full border border-border flex flex-col justify-center items-center group-hover:bg-primary group-hover:border-primary transition-colors">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:text-white dark:group-hover:text-black transition-colors rotate-45 group-hover:rotate-0">
-                      <path d="M5 12H19M19 12L12 5M19 12L12 19" />
-                    </svg>
-                  </div>
-                </div>
-                <p className="text-foreground/70 text-sm">{project.desc}</p>
-              </div>
+              <Button asChild size="lg" className="rounded-2xl font-bold shadow-lg shadow-primary/20">
+                <a href="#contact">
+                  Let&apos;s talk
+                </a>
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Right Side: New Image Accordion Design */}
+          <motion.div 
+            className="w-full lg:w-3/5"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <InteractiveAccordion />
+          </motion.div>
+        </div>
+
+        {/* Additional Labeling/Stats */}
+        <div className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-border/40 pt-12">
+          {[
+            { label: "Performance Score", value: "99/100" },
+            { label: "Total Shipments", value: "45+" },
+            { label: "Main Stack", value: "Next.js/TS" },
+            { label: "Engineering years", value: "6+" },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="space-y-1"
+            >
+              <p className="text-[10px] font-mono uppercase tracking-widest text-primary/60">{stat.label}</p>
+              <p className="text-2xl font-bold tracking-tighter">{stat.value}</p>
             </motion.div>
           ))}
         </div>

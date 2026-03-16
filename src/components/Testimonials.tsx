@@ -112,7 +112,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-5xl md:text-6xl font-black font-sans tracking-tight"
+            className="text-5xl md:text-6xl font-semibold font-sans tracking-tight"
           >
             Client <span className="text-primary italic font-serif">Feedback</span>.
           </motion.h3>

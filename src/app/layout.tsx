@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import { SocialSidebar } from "@/components/SocialSidebar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const mono = Space_Mono({ weight: ["400", "700"], subsets: ["latin"], variable: "--font-mono" });
@@ -29,8 +30,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`${inter.variable} ${mono.variable} font-sans antialiased bg-background text-foreground`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <CustomCursor />
           <Navbar />
+          <CustomCursor />
+          <SocialSidebar />
           <main className="relative z-10">{children}</main>
           <Footer />
         </ThemeProvider>

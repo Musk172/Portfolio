@@ -1,11 +1,37 @@
 "use client";
 
 import { motion } from "framer-motion";
+import ServicesBanner from "@/components/ServicesBanner";
+import { Github, Linkedin, Twitter, Mail, LucideIcon, ArrowUpRight, Dribbble } from "lucide-react";
+import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
+import Image from "next/image";
+
+const SocialLink = ({ icon: Icon, label, handle, href }: { icon: LucideIcon; label: string; handle: string; href: string }) => (
+  <motion.a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    whileHover={{ scale: 1.01, backgroundColor: "hsl(var(--foreground) / 0.03)" }}
+    whileTap={{ scale: 0.99 }}
+    className="flex items-center justify-between p-4 rounded-2xl border border-border bg-background/40 backdrop-blur-sm group transition-colors hover:border-primary/20"
+  >
+    <div className="flex items-center gap-4">
+      <div className="p-2.5 rounded-full border border-border bg-background flex items-center justify-center text-foreground/60 group-hover:text-primary transition-colors">
+        <Icon size={18} />
+      </div>
+      <div className="flex flex-col">
+        <span className="font-bold text-sm tracking-tight">{label}</span>
+        <span className="text-xs text-foreground/40 font-mono">{handle}</span>
+      </div>
+    </div>
+    <ArrowUpRight size={18} className="text-foreground/20 group-hover:text-primary transition-colors" />
+  </motion.a>
+);
 
 export default function About() {
   return (
-    <section id="about" className="relative min-h-screen flex items-center bg-surface/50 border-y border-border overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12 py-24 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32">
+    <section id="about" className="relative min-h-screen flex flex-col bg-background overflow-hidden">
+      <div className="container mx-auto px-6 md:px-12 py-24 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32 flex-1 flex items-center">
         <div className="flex flex-col justify-center order-2 md:order-1 relative z-10 w-full">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -14,7 +40,7 @@ export default function About() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h2 className="text-sm font-mono tracking-widest text-primary mb-4 uppercase">Identity</h2>
-            <h3 className="text-4xl md:text-5xl font-black font-sans tracking-tight mb-8">
+            <h3 className="text-4xl md:text-5xl font-semibold font-sans tracking-tight mb-8">
               A Bit About <span className="text-primary italic font-serif">Workshop</span>.
             </h3>
             
@@ -42,36 +68,57 @@ export default function About() {
           </motion.div>
         </div>
 
-        <div className="relative order-1 md:order-2 h-full min-h-[500px] flex items-center justify-center">
-          <motion.div 
-            className="absolute z-10 w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,theme(colors.primary/0.2),transparent_70%)] blur-2xl"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5 }}
-          />
-          <div className="relative z-20 w-full h-full max-w-sm aspect-[4/5] bg-foreground/5 overflow-hidden rounded-2xl group border border-border">
-             {/* Offset modern abstract visual block / placeholder */}
-             <motion.div
-               className="absolute inset-0 bg-background mix-blend-color-burn transition-opacity opacity-20 group-hover:opacity-40"
-             />
-             <motion.div
-                className="absolute inset-4 rounded-xl border border-primary/40 bg-transparent flex flex-wrap content-between p-4"
-                initial={{ opacity: 0, rotateX: 20 }}
-                whileInView={{ opacity: 1, rotateX: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 1 }}
-             >
-                <div className="w-12 h-12 bg-primary/20 rounded-full blur-md"></div>
-                <div className="w-8 h-8 self-end ml-auto bg-primary/60 mix-blend-overlay"></div>
-             </motion.div>
-             
-             {/* Simple typographic ornament inside the box */}
-             <div className="absolute bottom-8 right-8 text-6xl font-sans font-bold text-foreground/20 select-none">
-                026
-             </div>
-          </div>
+        <div className="relative order-1 md:order-2 h-full flex items-center justify-center">
+          <HighlightGroup className="w-full max-w-[450px] mx-auto lg:ml-auto">
+            <HighlighterItem className="rounded-[3rem] p-px h-full">
+              <div className="relative z-20 h-full overflow-hidden rounded-[3rem] border border-border bg-[#0a0a0a]/80 backdrop-blur-2xl shadow-2xl flex flex-col p-8 md:p-10">
+                <Particles
+                  className="absolute inset-0 -z-10 opacity-30 transition-opacity duration-1000 ease-in-out group-hover/item:opacity-100"
+                  quantity={100}
+                  color={"#ffffff"}
+                  vy={-0.1}
+                />
+                
+                {/* Profile Header */}
+                <div className="flex flex-col items-center text-center space-y-6 mb-10">
+                  <div className="relative w-32 h-32 rounded-full p-1 bg-gradient-to-b from-primary/50 to-transparent">
+                    <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-[#0a0a0a]">
+                      <Image 
+                        src="/avatar.png" 
+                        alt="Profile" 
+                        fill 
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <h4 className="text-3xl font-bold tracking-tight">Pritam V.</h4>
+                    <p className="text-xs font-mono tracking-[0.2em] text-foreground/40 uppercase">
+                      Product Designer • Full Stack Developer
+                    </p>
+                  </div>
+
+                  <p className="text-foreground/60 text-sm leading-relaxed max-w-[280px]">
+                    Partnering with future-facing teams to choreograph interfaces that feel cinematic yet effortless.
+                  </p>
+                </div>
+
+                {/* Social Links List */}
+                <div className="space-y-3">
+                  <SocialLink icon={Twitter} label="Twitter" handle="@pritam_dev" href="#" />
+                  <SocialLink icon={Linkedin} label="LinkedIn" handle="Pritam V." href="#" />
+                  <SocialLink icon={Dribbble} label="Dribbble" handle="pritam_design" href="#" />
+                  <SocialLink icon={Github} label="GitHub" handle="pritam-studio" href="#" />
+                </div>
+              </div>
+            </HighlighterItem>
+          </HighlightGroup>
         </div>
+      </div>
+      {/* Services/experience strips — part of this section, no divider */}
+      <div className="relative w-full overflow-hidden py-6 md:py-8 flex-shrink-0">
+        <ServicesBanner />
       </div>
     </section>
   );

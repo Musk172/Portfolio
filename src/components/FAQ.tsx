@@ -31,13 +31,13 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="relative py-24 md:py-32 bg-background border-t border-border z-20">
+    <section id="faq" className="relative py-24 md:py-32 bg-background z-20">
       <div className="container mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
           
           <div className="lg:col-span-4 flex flex-col justify-start text-center md:text-left">
              <h2 className="text-sm font-mono tracking-widest text-primary mb-4 uppercase">Queries</h2>
-             <h3 className="text-4xl md:text-5xl font-black font-sans tracking-tight mb-6">
+             <h3 className="text-4xl md:text-5xl font-semibold font-sans tracking-tight mb-6">
                Frequent <span className="text-primary italic font-serif">Questions</span>.
              </h3>
              <p className="text-foreground/60 font-mono text-sm max-w-sm mx-auto md:mx-0">

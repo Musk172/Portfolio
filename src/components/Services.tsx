@@ -1,10 +1,10 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import React, { useRef, useState, useEffect } from "react";
-import NextImage from "next/image";
+import { motion } from "framer-motion";
+import React from "react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { LayoutGrid, Cpu, Globe, Rocket, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Cpu, Globe, LayoutGrid } from "lucide-react";
 
 const SERVICES = [
   {
@@ -15,7 +15,6 @@ const SERVICES = [
     image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop",
     tech: ["React Native", "Expo", "Swift", "Zustand"],
     icon: LayoutGrid,
-    accent: "from-blue-500/20 to-cyan-500/20"
   },
   {
     id: "web-arch",
@@ -25,7 +24,6 @@ const SERVICES = [
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
     tech: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind"],
     icon: Globe,
-    accent: "from-purple-500/20 to-pink-500/20"
   },
   {
     id: "ai-auto",
@@ -35,203 +33,222 @@ const SERVICES = [
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200&auto=format&fit=crop",
     tech: ["N8n", "OpenAI API", "AI Agents", "Python", "Zapier"],
     icon: Cpu,
-    accent: "from-emerald-500/20 to-teal-500/20"
-  }
+  },
 ];
 
-export default function Services() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  // Map scroll progress to service index
-  const index = useTransform(scrollYProgress, [0, 0.33, 0.66, 1], [0, 0, 1, 2]);
-
-  useEffect(() => {
-    const unsubscribe = index.on("change", (latest) => {
-      setActiveIndex(Math.round(latest));
-    });
-    return () => unsubscribe();
-  }, [index]);
-
+function ServiceCard({
+  service,
+  featured = false,
+}: {
+  service: (typeof SERVICES)[number];
+  featured?: boolean;
+}) {
+  const Icon = service.icon;
   return (
-    <section 
-      ref={containerRef} 
-      id="services" 
-      className="relative bg-background"
-      style={{ height: `${SERVICES.length * 100}vh` }}
+    <motion.a
+      href="#contact"
+      whileHover={{ y: -4 }}
+      whileTap={{ scale: 0.99 }}
+      transition={{ type: "spring", stiffness: 250, damping: 22 }}
+      className={cn(
+        "group relative isolate rounded-2xl border p-7 md:p-8",
+        "transition-colors duration-300",
+        featured
+          ? "bg-primary text-primary-foreground border-primary/30 shadow-[0_20px_60px_-35px_hsl(var(--primary))]"
+          : "bg-background/40 border-border/60 hover:border-primary/40 hover:bg-surface/10"
+      )}
     >
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
-        {/* Animated Background Grain/Noise */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150 z-50" />
-        
-        {/* Dynamic Accent Blobs */}
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-          }}
-          transition={{ duration: 20, repeat: Infinity }}
-          className={BigAccentBlobStyle}
+      <div className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <div
+          className={cn(
+            "absolute -inset-px rounded-2xl",
+            featured
+              ? "bg-[radial-gradient(80%_80%_at_30%_20%,rgba(255,255,255,0.22),transparent_55%)]"
+              : "bg-[radial-gradient(70%_70%_at_35%_25%,hsl(var(--primary)/0.16),transparent_55%)]"
+          )}
         />
-        
-        <div className="container mx-auto px-6 md:px-12 h-full flex flex-col pt-24 pb-12 relative z-10">
-          {/* Section Heading with Animated Line */}
-          <div className="mb-16 md:mb-24 flex flex-col items-center text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-4 mb-6"
-            >
-              <span className="h-[1px] w-12 bg-primary/40" />
-              <h2 className="text-xs font-mono tracking-[0.3em] text-primary uppercase">Expertise</h2>
-              <span className="h-[1px] w-12 bg-primary/40" />
-            </motion.div>
-            <motion.h3 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black font-sans tracking-tight"
-            >
-              What I <span className="text-primary italic font-serif">Deliver</span>.
-            </motion.h3>
+      </div>
+
+      <div className="flex items-start justify-between gap-6">
+        <div className="space-y-5">
+          <div
+            className={cn(
+              "inline-flex items-center justify-center rounded-xl border p-2.5",
+              featured
+                ? "bg-white/10 border-white/20"
+                : "bg-primary/10 border-primary/20 text-primary"
+            )}
+          >
+            <Icon size={22} className={featured ? "text-white" : "text-primary"} />
           </div>
 
-          <div className="flex-1 flex flex-col lg:grid lg:grid-cols-12 items-center gap-12 lg:gap-20">
-            
-            {/* Left Column: Numbering & Vertical Progress */}
-            <div className="hidden lg:flex lg:col-span-1 flex-col items-center justify-center gap-8 border-r border-border/50 h-full py-20">
-              {SERVICES.map((service, i) => (
-                <div key={service.id} className="relative flex items-center justify-center w-full">
-                  <motion.span 
-                    animate={{ 
-                      color: activeIndex === i ? "var(--primary)" : "rgba(var(--foreground), 0.2)",
-                      scale: activeIndex === i ? 1.2 : 1
-                    }}
-                    className="text-lg font-mono font-bold rotate-90"
-                  >
-                    0{i + 1}
-                  </motion.span>
-                </div>
-              ))}
-              <div className="h-40 w-[1px] bg-border relative overflow-hidden">
-                <motion.div 
-                   style={{ height: "100%", originY: 0, scaleY: scrollYProgress }}
-                   className="w-full bg-primary shadow-[0_0_10px_rgba(var(--primary),0.5)]"
-                />
-              </div>
-            </div>
+          <div className="space-y-2">
+            <p
+              className={cn(
+                "text-[10px] font-mono uppercase tracking-[0.26em]",
+                featured ? "text-primary-foreground/75" : "text-primary/70"
+              )}
+            >
+              {service.subtitle}
+            </p>
+            <h3
+              className={cn(
+                "text-lg md:text-xl font-bold tracking-tight",
+                featured ? "text-primary-foreground" : "text-foreground"
+              )}
+            >
+              {service.title}
+            </h3>
+          </div>
+        </div>
 
-            {/* Middle Column: Content */}
-            <div className="lg:col-span-5 h-full flex flex-col justify-center">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 30 }}
-                  transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                  className="space-y-10"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2.5 bg-primary/10 rounded-xl text-primary border border-primary/20">
-                        {React.createElement(SERVICES[activeIndex].icon, { size: 24 })}
-                      </div>
-                      <span className="text-sm font-mono tracking-widest text-primary/70 uppercase">
-                        {SERVICES[activeIndex].subtitle}
-                      </span>
-                    </div>
-                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-black font-sans tracking-tight leading-[1.1]">
-                      {SERVICES[activeIndex].title}
-                    </h3>
-                  </div>
+        <div
+          className={cn(
+            "shrink-0 rounded-full border p-2 transition-colors duration-300",
+            featured
+              ? "border-white/25 bg-white/10"
+              : "border-border/70 bg-background/40 group-hover:border-primary/40"
+          )}
+        >
+          <ArrowUpRight
+            size={18}
+            className={cn(
+              "transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5",
+              featured ? "text-white" : "text-foreground/70 group-hover:text-primary"
+            )}
+          />
+        </div>
+      </div>
 
-                  <p className="text-foreground/60 text-lg lg:text-xl leading-relaxed max-w-lg font-medium">
-                    {SERVICES[activeIndex].description}
+      <p
+        className={cn(
+          "mt-5 text-sm md:text-[15px] leading-relaxed font-medium",
+          featured ? "text-primary-foreground/80" : "text-foreground/60"
+        )}
+      >
+        {service.description}
+      </p>
+
+      <div className="mt-6 flex flex-wrap gap-2">
+        {service.tech.map((tech) => (
+          <span
+            key={tech}
+            className={cn(
+              "px-3.5 py-1.5 rounded-full text-[10px] font-mono font-bold tracking-[0.12em] border",
+              featured
+                ? "border-white/20 bg-white/10 text-primary-foreground/85"
+                : "border-border/60 bg-background/30 text-foreground/70 group-hover:border-primary/25"
+            )}
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+
+      <div
+        className={cn(
+          "mt-7 inline-flex items-center gap-2 text-xs font-bold",
+          featured ? "text-primary-foreground" : "text-foreground/80 group-hover:text-primary"
+        )}
+      >
+        <span className="font-mono tracking-[0.22em] uppercase">Read more</span>
+        <span className="transition-transform duration-300 group-hover:translate-x-1">
+          →
+        </span>
+      </div>
+    </motion.a>
+  );
+}
+
+export default function Services() {
+  return (
+    <section id="services" className="relative w-full bg-background">
+      <div className="container mx-auto px-6 md:px-12 py-24 md:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          {/* Left editorial column */}
+          <div className="lg:col-span-4 lg:sticky lg:top-28">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-10"
+            >
+              {/* Tag + CTA row */}
+              <div className="flex items-center justify-between gap-6">
+                <div className="flex items-center gap-3">
+                  <span className="h-px w-8 bg-primary/60" />
+                  <p className="text-[10px] font-mono tracking-[0.32em] text-primary/80 uppercase">
+                    My services
                   </p>
-                  
-                  <div className="flex flex-wrap gap-2.5">
-                    {SERVICES[activeIndex].tech.map((tech) => (
-                      <span 
-                        key={tech} 
-                        className="px-5 py-2 text-[10px] font-mono font-bold tracking-[0.1em] bg-surface/40 hover:bg-primary/10 hover:border-primary/30 transition-all border border-border/50 rounded-full text-foreground/70"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                </div>
 
-                  <motion.button
-                    whileHover={{ gap: "1.5rem" }}
-                    className="flex items-center gap-4 text-primary font-bold group"
-                  >
-                    View Case Study
-                    <ArrowUpRight size={20} className="transition-transform group-hover:rotate-45" />
-                  </motion.button>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Right Column: Visual Case */}
-            <div className="lg:col-span-6 w-full h-[400px] lg:h-[600px] relative">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  initial={{ opacity: 0, scale: 0.9, rotateY: 20 }}
-                  animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                  exit={{ opacity: 0, scale: 1.1, rotateY: -20 }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-0 rounded-[2.5rem] overflow-hidden border border-border/50 bg-black shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]"
+                <Button
+                  asChild
+                  variant="outline"
+                  className="group rounded-full px-5 py-2 border-border/70 bg-background/60 hover:bg-surface/10 hover:border-primary/50 transition-all duration-300"
                 >
-                  {/* Glass Card Overlay */}
-                  <div className="absolute inset-x-6 top-6 h-12 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 z-20 flex items-center px-4 gap-2">
-                    <div className="flex gap-1.5 px-2">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-                    </div>
-                    <div className="flex-1 bg-white/5 h-6 rounded-lg border border-white/5 mx-4 flex items-center px-3">
-                       <span className="text-[10px] text-white/30 font-mono">technical_manifest.json</span>
-                    </div>
-                  </div>
+                  <a
+                    href="#contact"
+                    className="flex items-center gap-2 text-[11px] font-mono tracking-[0.22em] uppercase"
+                  >
+                    <span>All services</span>
+                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                      +
+                    </span>
+                  </a>
+                </Button>
+              </div>
 
-                  <NextImage 
-                    src={SERVICES[activeIndex].image}
-                    alt={SERVICES[activeIndex].title}
-                    fill
-                    className="object-cover transition-transform duration-[2s] hover:scale-110 opacity-70"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    priority
+              {/* Main heading */}
+              <div className="space-y-4">
+                <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-[0.95]">
+                  WHAT I’M <br /> OFFERING
+                </h2>
+                <p className="text-foreground/55 text-sm md:text-base font-medium leading-relaxed max-w-md">
+                  Opinionated, end‑to‑end services that combine product thinking, crisp UX, and reliable engineering.
+                </p>
+              </div>
+
+              {/* Vertical scroll cue */}
+              <div className="hidden lg:flex items-center gap-6 pt-4">
+                <div className="relative h-28 flex items-center">
+                  <div className="h-full w-px bg-border/40" />
+                  <motion.div
+                    className="absolute left-[-4px] h-2 w-2 rounded-full bg-primary shadow-[0_0_18px_hsl(var(--primary))]"
+                    animate={{ y: [0, 70, 0] }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                   />
-                  
-                  {/* Gradient Accents over Image */}
-                  <div className={cn(
-                    "absolute inset-0 bg-gradient-to-br transition-colors duration-1000 mix-blend-color-dodge opacity-40",
-                    SERVICES[activeIndex].accent
-                  )} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90" />
+                </div>
+                <div className="flex items-center gap-4">
+                  <p className="text-[10px] font-mono tracking-[0.32em] text-foreground/50 uppercase">
+                    Scroll
+                  </p>
+                  <a
+                    href="#projects"
+                    className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/70 bg-background/60 hover:bg-primary hover:border-primary transition-colors duration-300"
+                    aria-label="Scroll to projects"
+                  >
+                    <ArrowDown
+                      size={18}
+                      className="text-foreground/70 group-hover:text-primary-foreground transition-colors duration-300"
+                    />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
 
-                  {/* Tech Floating Label */}
-                  <div className="absolute bottom-8 right-8 p-4 glass rounded-2xl border border-white/10 z-20">
-                     <Rocket className="text-primary mb-2" size={20} />
-                     <p className="text-[10px] uppercase tracking-widest font-bold opacity-50">Performance</p>
-                     <p className="text-lg font-bold">99/100</p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+          {/* Right cards grid */}
+          <div className="lg:col-span-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7">
+              <ServiceCard service={SERVICES[0]} featured />
+              <ServiceCard service={SERVICES[1]} />
+              <ServiceCard service={SERVICES[2]} />
             </div>
-
           </div>
         </div>
       </div>
     </section>
   );
 }
-
-const BigAccentBlobStyle = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[600px] bg-primary/5 blur-[160px] rounded-full pointer-events-none";

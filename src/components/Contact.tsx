@@ -1,8 +1,111 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence, useAnimate } from "framer-motion";
+import { useState, useEffect } from "react";
 import { Send, Mail, MapPin, Clock, CheckCircle2, LucideIcon } from "lucide-react";
+import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
+
+const PointerAnimation = () => {
+  const [scope, animate] = useAnimate();
+
+  useEffect(() => {
+    animate(
+      [
+        ["#pointer", { left: "60%", top: "20%" }, { duration: 0 }],
+        ["#ux", { opacity: 1, scale: 1 }, { duration: 0.3 }],
+        [
+          "#pointer",
+          { left: "20%", top: "40%" },
+          { at: "+0.5", duration: 0.8, ease: "easeInOut" },
+        ],
+        ["#ux", { opacity: 0.4, scale: 0.9 }, { at: "-0.5", duration: 0.2 }],
+        ["#dev", { opacity: 1, scale: 1 }, { duration: 0.3 }],
+        [
+          "#pointer",
+          { left: "70%", top: "60%" },
+          { at: "+0.5", duration: 0.8, ease: "easeInOut" },
+        ],
+        ["#dev", { opacity: 0.4, scale: 0.9 }, { at: "-0.5", duration: 0.2 }],
+        ["#brand", { opacity: 1, scale: 1 }, { duration: 0.3 }],
+        [
+          "#pointer",
+          { left: "40%", top: "70%" },
+          { at: "+0.5", duration: 0.8, ease: "easeInOut" },
+        ],
+        ["#brand", { opacity: 0.4, scale: 0.9 }, { at: "-0.5", duration: 0.2 }],
+        ["#strat", { opacity: 1, scale: 1 }, { duration: 0.3 }],
+        [
+          "#pointer",
+          { left: "60%", top: "20%" },
+          { at: "+0.5", duration: 0.8, ease: "easeInOut" },
+        ],
+        ["#strat", { opacity: 0.4, scale: 0.9 }, { at: "-0.5", duration: 0.2 }],
+      ],
+      {
+        repeat: Number.POSITIVE_INFINITY,
+      }
+    );
+  }, [animate]);
+
+  return (
+    <div className="relative w-full h-48 md:h-64 overflow-hidden" ref={scope}>
+      <div
+        id="ux"
+        className="absolute top-[20%] right-[20%] px-4 py-2 rounded-full border border-border bg-background/80 backdrop-blur-sm text-sm font-medium opacity-40"
+      >
+        UI/UX Design
+      </div>
+      <div
+        id="dev"
+        className="absolute top-[40%] left-[10%] px-4 py-2 rounded-full border border-border bg-background/80 backdrop-blur-sm text-sm font-medium opacity-40"
+      >
+        Web Development
+      </div>
+      <div
+        id="brand"
+        className="absolute bottom-[20%] right-[10%] px-4 py-2 rounded-full border border-border bg-background/80 backdrop-blur-sm text-sm font-medium opacity-40"
+      >
+        Branding
+      </div>
+      <div
+        id="strat"
+        className="absolute bottom-[10%] left-[30%] px-4 py-2 rounded-full border border-border bg-background/80 backdrop-blur-sm text-sm font-medium opacity-40"
+      >
+        Digital Strategy
+      </div>
+
+      <motion.div id="pointer" className="absolute z-30 pointer-events-none">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="text-primary fill-primary"
+        >
+          <path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
+        </svg>
+        <span className="ml-4 mt-2 px-2 py-1 bg-primary text-white dark:text-black text-xs font-bold rounded-md shadow-lg block w-fit whitespace-nowrap">
+          You are here
+        </span>
+      </motion.div>
+    </div>
+  );
+};
+
+const ContactSocialButton = ({ icon: Icon, href }: { icon: LucideIcon; href: string }) => (
+  <motion.a
+    href={href}
+    whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary) / 0.1)" }}
+    whileTap={{ scale: 0.9 }}
+    className="p-4 rounded-2xl border border-border bg-background/50 backdrop-blur-sm text-foreground/70 hover:text-primary transition-colors"
+  >
+    <Icon size={20} />
+  </motion.a>
+);
 
 interface ContactInfoItemProps {
   icon: LucideIcon;
@@ -27,83 +130,7 @@ const ContactInfoItem = ({ icon: Icon, title, content }: ContactInfoItemProps) =
   </motion.div>
 );
 
-interface FloatingInputProps {
-  label: string;
-  id: string;
-  type?: string;
-  required?: boolean;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  placeholder?: string;
-}
-
-const FloatingInput = ({ label, id, type = "text", required = false, value, onChange, placeholder }: FloatingInputProps) => {
-  const [isFocused, setIsFocused] = useState(false);
-  
-  return (
-    <div className="relative group">
-      <motion.label
-        htmlFor={id}
-        initial={false}
-        animate={{
-          y: (isFocused || value) ? -28 : 0,
-          scale: (isFocused || value) ? 0.85 : 1,
-          color: isFocused ? "var(--primary)" : "rgba(var(--foreground), 0.5)",
-        }}
-        className="absolute left-0 top-3 text-foreground/50 pointer-events-none origin-left transition-colors duration-200"
-      >
-        {label} {required && <span className="text-primary">*</span>}
-      </motion.label>
-      <input
-        type={type}
-        id={id}
-        required={required}
-        value={value}
-        onChange={onChange}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-primary transition-all duration-300 placeholder:opacity-0"
-        placeholder={placeholder}
-      />
-      <motion.div 
-        className="absolute bottom-0 left-0 h-[2px] bg-primary"
-        initial={{ width: 0 }}
-        animate={{ width: isFocused ? "100%" : "0%" }}
-        transition={{ duration: 0.3 }}
-      />
-    </div>
-  );
-};
-
 export default function Contact() {
-  const [status, setStatus] = useState("idle");
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: ""
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
-    
-    // Simulate API Call
-    setTimeout(() => {
-      setStatus("success");
-      // Reset form after success
-      setTimeout(() => {
-        setStatus("idle");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      }, 3000);
-    }, 2000);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { id, value } = e.target;
-    setFormData(prev => ({ ...prev, [id]: value }));
-  };
-
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-background overflow-hidden">
       {/* Decorative background elements */}
@@ -129,7 +156,7 @@ export default function Contact() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="text-5xl md:text-6xl font-black font-sans tracking-tight mb-8"
+                className="text-5xl md:text-6xl font-semibold font-sans tracking-tight mb-8"
               >
                 Let&apos;s build <br />
                 something <span className="text-primary italic font-serif">great</span>.
@@ -165,7 +192,7 @@ export default function Contact() {
             </div>
           </div>
           
-          {/* Right Side: Form */}
+          {/* Right Side: Interactive Connect Card */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -173,95 +200,53 @@ export default function Contact() {
             transition={{ duration: 0.8 }}
             className="lg:w-3/5"
           >
-            <div className="bg-surface/50 backdrop-blur-xl border border-border p-8 md:p-12 rounded-[2rem] shadow-2xl shadow-primary/5">
-              <form onSubmit={handleSubmit} className="space-y-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <FloatingInput 
-                    label="FullName" 
-                    id="name" 
-                    required 
-                    value={formData.name}
-                    onChange={handleChange}
-                  />
-                  <FloatingInput 
-                    label="Email Address" 
-                    id="email" 
-                    type="email" 
-                    required 
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                </div>
-                
-                <FloatingInput 
-                  label="Subject" 
-                  id="subject" 
-                  value={formData.subject}
-                  onChange={handleChange}
-                />
+            <HighlightGroup className="group h-full">
+              <div className="group/item h-full" data-aos="fade-down">
+                <HighlighterItem className="rounded-[2.5rem] p-px">
+                  <div className="relative z-20 h-full overflow-hidden rounded-[2.5rem] border border-border bg-background/50 backdrop-blur-xl shadow-2xl shadow-primary/5">
+                    <Particles
+                      className="absolute inset-0 -z-10 opacity-10 transition-opacity duration-1000 ease-in-out group-hover/item:opacity-100"
+                      quantity={150}
+                      color={"#0d6efd"}
+                      vy={-0.2}
+                    />
+                    
+                    <div className="flex flex-col items-center justify-center p-8 md:p-12 min-h-[500px]">
+                      {/* Animated Pointer Section */}
+                      <PointerAnimation />
 
-                <div className="relative group">
-                  <motion.label
-                    htmlFor="message"
-                    initial={false}
-                    animate={{
-                      y: (formData.message) ? -28 : 0,
-                      scale: (formData.message) ? 0.85 : 1,
-                      color: "rgba(var(--foreground), 0.5)",
-                    }}
-                    className="absolute left-0 top-3 text-foreground/50 pointer-events-none origin-left transition-colors duration-200"
-                  >
-                    Your Message <span className="text-primary">*</span>
-                  </motion.label>
-                  <textarea 
-                    id="message" 
-                    required 
-                    rows={4} 
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full bg-transparent border-b border-border py-3 focus:outline-none focus:border-primary transition-all duration-300 resize-none overflow-hidden"
-                  />
-                  <div className="absolute bottom-0 left-0 h-[2px] bg-primary w-0 group-focus-within:w-full transition-all duration-500" />
-                </div>
+                      <div className="text-center mt-8 space-y-6">
+                        <div className="space-y-2">
+                          <h3 className="text-3xl md:text-5xl font-bold tracking-tight">
+                            Ready to <span className="text-primary italic font-serif">collaborate?</span>
+                          </h3>
+                          <p className="text-foreground/50 text-lg">
+                            I&apos;m currently available for new projects and speaking engagements.
+                          </p>
+                        </div>
 
-                <div className="pt-4">
-                  <AnimatePresence mode="wait">
-                    {status === "idle" || status === "loading" ? (
-                      <motion.button 
-                        key="submit-btn"
-                        type="submit" 
-                        disabled={status === "loading"}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="group relative w-full md:w-auto px-10 py-5 bg-primary text-white dark:text-black font-bold rounded-2xl flex items-center justify-center gap-3 overflow-hidden transition-all duration-300"
-                      >
-                        <span className="relative z-10 flex items-center gap-3">
-                          {status === "loading" ? "Sending..." : "Send Message"}
-                          <Send size={18} className={`transition-transform duration-300 ${status === "loading" ? "translate-x-10 opacity-0" : "group-hover:translate-x-1 group-hover:-translate-y-1"}`} />
-                        </span>
-                        
-                        <motion.div 
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
-                          animate={{ translateX: ["100%", "-100%"] }}
-                          transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                        />
-                      </motion.button>
-                    ) : (
-                      <motion.div 
-                        key="success-msg"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        className="w-full md:w-auto flex items-center justify-center gap-3 px-10 py-5 bg-green-500/10 text-green-500 border border-green-500/20 rounded-2xl font-bold"
-                      >
-                        <CheckCircle2 size={24} />
-                        Successfully Sent!
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </form>
-            </div>
+                        <div className="flex flex-wrap justify-center gap-4">
+                          <motion.a
+                            href="mailto:hello@example.com"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="px-8 py-4 bg-primary text-white dark:text-black font-bold rounded-2xl flex items-center gap-2 shadow-lg shadow-primary/20"
+                          >
+                            <Mail size={20} />
+                            Book a call
+                          </motion.a>
+                          
+                          <motion.div className="flex gap-2">
+                            <ContactSocialButton icon={Send} href="#" />
+                            <ContactSocialButton icon={CheckCircle2} href="#" />
+                          </motion.div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </HighlighterItem>
+              </div>
+            </HighlightGroup>
           </motion.div>
 
         </div>

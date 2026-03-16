@@ -2,11 +2,11 @@ import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-surface pt-16 pb-32 md:pb-16 mt-24 border-t border-border relative overflow-hidden">
+    <footer className="w-full bg-background pt-16 pb-32 md:pb-16 mt-24 relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-start md:items-center relative z-10">
         
         <div className="mb-12 md:mb-0">
-          <h2 className="text-4xl md:text-5xl font-black font-sans tracking-tight mb-4">
+          <h2 className="text-4xl md:text-5xl font-semibold font-sans tracking-tight mb-4">
             Let&apos;s <span className="text-primary italic font-serif">connect</span>.
           </h2>
           <p className="max-w-md text-foreground/70 font-mono text-sm leading-relaxed mb-8">
