@@ -15,6 +15,7 @@ interface AnimatedGridPatternProps {
   className?: string;
   maxOpacity?: number;
   duration?: number;
+  repeatDelay?: number;
 }
 
 export function AnimatedGridPattern({
@@ -27,6 +28,7 @@ export function AnimatedGridPattern({
   className,
   maxOpacity = 0.5,
   duration = 4,
+  repeatDelay = 0.5,
   ...props
 }: AnimatedGridPatternProps) {
   const id = useId();
@@ -127,6 +129,7 @@ export function AnimatedGridPattern({
               duration,
               repeat: 1,
               delay: index * 0.1,
+              repeatDelay,
               repeatType: "reverse",
             }}
             onAnimationComplete={() => updateSquarePosition(id)}
