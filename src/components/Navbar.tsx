@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
 import { Home, User, Briefcase, Mail } from "lucide-react";
 import { NavBar } from "@/components/ui/tubelight-navbar";
 
@@ -15,13 +14,10 @@ const navItems = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [activeTab, setActiveTab] = useState("Home");
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-      
       // Detection for active section
       for (const item of [...navItems].reverse()) {
         const el = document.querySelector(item.url);

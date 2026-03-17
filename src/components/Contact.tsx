@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence, useAnimate } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useAnimate } from "framer-motion";
+import { useEffect } from "react";
 import { Send, Mail, MapPin, Clock, CheckCircle2, LucideIcon } from "lucide-react";
 import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
 

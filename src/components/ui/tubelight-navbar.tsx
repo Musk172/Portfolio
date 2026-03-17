@@ -21,18 +21,13 @@ interface NavBarProps {
 
 export function NavBar({ items, className, activeTab: controlledActiveTab, onTabChange }: NavBarProps) {
   const [internalActiveTab, setInternalActiveTab] = useState(items[0].name)
-  const [isMobile, setIsMobile] = useState(false)
 
   const activeTab = controlledActiveTab ?? internalActiveTab;
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
+    // keep activeTab in sync on mount
+    setInternalActiveTab(controlledActiveTab ?? items[0].name)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

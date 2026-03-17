@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import ServicesBanner from "@/components/ServicesBanner";
-import { Github, Linkedin, Twitter, Mail, LucideIcon, ArrowUpRight, Dribbble } from "lucide-react";
+import { Github, Linkedin, Twitter, LucideIcon, ArrowUpRight, Dribbble } from "lucide-react";
 import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
 import Image from "next/image";
 

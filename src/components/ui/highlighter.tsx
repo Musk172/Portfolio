@@ -47,12 +47,10 @@ export const HighlightGroup: React.FC<HighlightGroupProps> = ({
   const [boxes, setBoxes] = useState<HTMLElement[]>([]);
 
   useEffect(() => {
-    containerRef.current &&
-      setBoxes(
-        Array.from(containerRef.current.children).map(
-          (el) => el as HTMLElement,
-        ),
-      );
+    if (!containerRef.current) return;
+    setBoxes(
+      Array.from(containerRef.current.children).map((el) => el as HTMLElement),
+    );
   }, []);
 
   useEffect(() => {
@@ -162,10 +160,23 @@ export const Particles: React.FC<ParticlesProps> = ({
   vx = 0,
   vy = 0,
 }) => {
+  type Circle = {
+    x: number;
+    y: number;
+    translateX: number;
+    translateY: number;
+    size: number;
+    alpha: number;
+    targetAlpha: number;
+    dx: number;
+    dy: number;
+    magnetism: number;
+  };
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const context = useRef<CanvasRenderingContext2D | null>(null);
-  const circles = useRef<any[]>([]);
+  const circles = useRef<Circle[]>([]);
   const mousePosition = useMousePosition();
   const mouse = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const canvasSize = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
@@ -212,19 +223,6 @@ export const Particles: React.FC<ParticlesProps> = ({
         mouse.current.y = y;
       }
     }
-  };
-
-  type Circle = {
-    x: number;
-    y: number;
-    translateX: number;
-    translateY: number;
-    size: number;
-    alpha: number;
-    targetAlpha: number;
-    dx: number;
-    dy: number;
-    magnetism: number;
   };
 
   const resizeCanvas = () => {
