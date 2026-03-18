@@ -1,25 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const pos = useRef({ x: 0, y: 0 });
   const [isHidden, setIsHidden] = useState(false);
+  const rafId = useRef<number>(0);
+  const targetScale = useRef(1);
+  const currentScale = useRef(1);
 
   useEffect(() => {
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
+    // Direct DOM updates — no React re-renders
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      pos.current.x = e.clientX - 12;
+      pos.current.y = e.clientY - 12;
     };
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
-      // If hovering over the SocialSidebar (or anything else with hide-cursor)
+
       if (target.closest(".hide-cursor")) {
         setIsHidden(true);
-        setIsHovered(false);
+        targetScale.current = 1;
         return;
       } else {
         setIsHidden(false);
@@ -32,38 +38,40 @@ export default function CustomCursor() {
         target.closest("button") ||
         target.classList.contains("cursor-pointer")
       ) {
-        setIsHovered(true);
+        targetScale.current = 2.5;
       } else {
-        setIsHovered(false);
+        targetScale.current = 1;
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseover", handleMouseOver);
+    // Smooth animation loop via rAF
+    function tick() {
+      if (cursor) {
+        currentScale.current += (targetScale.current - currentScale.current) * 0.15;
+        cursor.style.transform = `translate3d(${pos.current.x}px, ${pos.current.y}px, 0) scale(${currentScale.current})`;
+      }
+      rafId.current = requestAnimationFrame(tick);
+    }
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
+    rafId.current = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseover", handleMouseOver);
+      cancelAnimationFrame(rafId.current);
     };
   }, []);
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[100] mix-blend-difference hidden md:block"
+    <div
+      ref={cursorRef}
+      className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[100] mix-blend-difference hidden md:block will-change-transform"
       style={{
         backgroundColor: "hsl(var(--primary))",
         opacity: isHidden ? 0 : 1,
-      }}
-      animate={{
-        x: mousePosition.x - 12,
-        y: mousePosition.y - 12,
-        scale: isHovered ? 2.5 : 1,
-      }}
-      transition={{
-        type: "spring",
-        mass: 0.1,
-        stiffness: 800,
-        damping: 40,
+        transition: "opacity 0.2s ease",
       }}
     />
   );

@@ -24,7 +24,7 @@ export function AnimatedGridPattern({
   x = -1,
   y = -1,
   strokeDasharray = 0,
-  numSquares = 50,
+  numSquares = 18,
   className,
   maxOpacity = 0.5,
   duration = 4,
@@ -128,7 +128,7 @@ export function AnimatedGridPattern({
             transition={{
               duration,
               repeat: 1,
-              delay: index * 0.1,
+              delay: index * 0.04,
               repeatDelay,
               repeatType: "reverse",
             }}

@@ -5,6 +5,10 @@ import ServicesBanner from "@/components/ServicesBanner";
 import { Github, Linkedin, Twitter, LucideIcon, ArrowUpRight, Dribbble } from "lucide-react";
 import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
 import Image from "next/image";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
+import { cn } from "@/lib/utils";
 
 const SocialLink = ({ icon: Icon, label, handle, href }: { icon: LucideIcon; label: string; handle: string; href: string }) => (
   <motion.a
@@ -29,9 +33,26 @@ const SocialLink = ({ icon: Icon, label, handle, href }: { icon: LucideIcon; lab
 );
 
 export default function About() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <section id="about" className="relative min-h-screen flex flex-col bg-background overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12 py-24 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32 flex-1 flex items-center">
+    <section id="about" className="relative flex flex-col bg-background overflow-hidden">
+      <AnimatedGridPattern
+        numSquares={30}
+        maxOpacity={0.1}
+        duration={3}
+        repeatDelay={1}
+        className={cn(
+          "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
+          "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12 opacity-50 z-0 text-primary",
+        )}
+      />
+      <div className="container mx-auto px-6 md:px-12 pt-16 pb-24 md:pt-20 md:pb-32 grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-32 items-center mt-8 md:mt-12 relative z-10">
         <div className="flex flex-col justify-center order-2 md:order-1 relative z-10 w-full">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -68,23 +89,23 @@ export default function About() {
           </motion.div>
         </div>
 
-        <div className="relative order-1 md:order-2 h-full flex items-center justify-center">
-          <HighlightGroup className="w-full max-w-[450px] mx-auto lg:ml-auto">
+        <div className="relative order-1 md:order-2 h-full flex items-center justify-center lg:justify-end">
+          <HighlightGroup className="w-full max-w-[450px] mx-auto lg:ml-auto lg:translate-x-12 xl:translate-x-20">
             <HighlighterItem className="rounded-[3rem] p-px h-full">
-              <div className="relative z-20 h-full overflow-hidden rounded-[3rem] border border-border bg-[#0a0a0a]/80 backdrop-blur-2xl shadow-2xl flex flex-col p-8 md:p-10">
+              <div className="relative z-20 h-full overflow-hidden rounded-[3rem] border border-border bg-white/50 dark:bg-[#0a0a0a]/80 backdrop-blur-2xl shadow-2xl flex flex-col p-8 md:p-10">
                 <Particles
                   className="absolute inset-0 -z-10 opacity-30 transition-opacity duration-1000 ease-in-out group-hover/item:opacity-100"
                   quantity={100}
-                  color={"#ffffff"}
+                  color={mounted && resolvedTheme === "light" ? "#000000" : "#ffffff"}
                   vy={-0.1}
                 />
                 
                 {/* Profile Header */}
                 <div className="flex flex-col items-center text-center space-y-6 mb-10">
                   <div className="relative w-32 h-32 rounded-full p-1 bg-gradient-to-b from-primary/50 to-transparent">
-                    <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-[#0a0a0a]">
+                    <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-[#0a0a0a]">
                       <Image 
-                        src="/avatar.png" 
+                        src="/remove_the_background_202603181545.png" 
                         alt="Profile" 
                         fill 
                         className="object-cover"

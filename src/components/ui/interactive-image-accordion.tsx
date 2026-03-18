@@ -69,6 +69,7 @@ const AccordionItem = ({ item, isActive, onActivate }: AccordionItemProps) => {
       <motion.img
         src={item.imageUrl}
         alt={item.title}
+        loading="lazy"
         className="absolute inset-0 w-full h-full object-cover"
         initial={false}
         animate={{ scale: isActive ? 1.08 : 1.02 }}

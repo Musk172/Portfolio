@@ -200,6 +200,7 @@ export function FeatureCarousel() {
                   <img
                     src={feature.image}
                     alt={feature.label}
+                    loading="lazy"
                     className={cn(
                       "w-full h-full object-cover transition-all duration-1000",
                       isActive

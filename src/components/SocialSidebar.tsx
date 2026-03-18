@@ -49,7 +49,7 @@ export function SocialSidebar() {
                 rel="noopener noreferrer"
                 aria-label={social.name}
                 // width/height reduced from 50px to 44px to make icons a little smaller
-                className="relative flex items-center justify-center w-[44px] h-[44px] rounded-full text-foreground/80 dark:text-[#666] bg-background dark:bg-white overflow-hidden transition-all duration-300 ease-in-out hover:shadow-[3px_2px_25px_0px_rgba(255,255,255,0.1)] hover:text-white dark:hover:text-white"
+                className="relative flex items-center justify-center w-[44px] h-[44px] rounded-full border border-border/60 bg-secondary/30 backdrop-blur-md text-foreground/70 overflow-hidden transition-all duration-300 ease-in-out hover:border-foreground/30 hover:shadow-[0_0_20px_rgba(0,0,0,0.1)] hover:text-white"
               >
                 {/* Background fill sliding up */}
                 <div

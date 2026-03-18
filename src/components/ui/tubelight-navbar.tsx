@@ -33,11 +33,11 @@ export function NavBar({ items, className, activeTab: controlledActiveTab, onTab
   return (
     <div
       className={cn(
-        "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-[70] mb-6 sm:pt-6 pointer-events-auto",
+        "fixed top-8 sm:top-8 md:top-11 z-[70] pointer-events-auto transition-all duration-500 ease-in-out left-1/2 -translate-x-1/2",
         className,
       )}
     >
-      <div className="flex items-center gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+      <div className="flex items-center gap-2 md:gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
         {items.map((item) => {
           const Icon = item.icon
           const isActive = activeTab === item.name

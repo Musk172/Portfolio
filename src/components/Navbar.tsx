@@ -34,14 +34,14 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 inset-x-0 z-[60] py-6 px-8 md:px-12 flex items-center justify-between pointer-events-none">
+      <div className="fixed top-0 inset-x-0 z-[60] pt-8 sm:pt-8 md:pt-12 px-6 sm:px-8 md:px-12 flex items-center justify-between pointer-events-none transition-all duration-300">
         {/* Logo */}
         <Link href="/" className="font-mono font-bold text-2xl tracking-tighter pointer-events-auto hover:scale-110 transition-transform active:scale-95">
           PV<span className="text-primary">.</span>
         </Link>
 
         {/* Theme Toggle */}
-        <div className="flex items-center pointer-events-auto">
+        <div className="flex items-center pointer-events-auto relative z-[60]">
           <ThemeToggle />
         </div>
       </div>
