@@ -10,7 +10,21 @@ import { useEffect, useState } from "react";
 import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
 
-const SocialLink = ({ icon: Icon, label, handle, href }: { icon: LucideIcon; label: string; handle: string; href: string }) => (
+const XIcon = ({ size = 24, className = "" }: { size?: number | string; className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    style={{ marginTop: "2px" }}
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+)
+
+const SocialLink = ({ icon: Icon, label, handle, href }: { icon: any; label: string; handle: string; href: string }) => (
   <motion.a
     href={href}
     target="_blank"
@@ -59,6 +73,7 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col items-center md:items-start text-center md:text-left"
           >
             <h2 className="text-sm font-mono tracking-widest text-primary mb-4 uppercase">Identity</h2>
             <h3 className="text-4xl md:text-5xl font-semibold font-sans tracking-tight mb-8">
@@ -76,16 +91,6 @@ export default function About() {
                 Beyond code, I am designing seamless digital experiences heavily inspired by modern typography and grid layouts—merging logic with artistic intent.
               </p>
             </div>
-            
-            <motion.div
-              whileHover={{ x: 10 }}
-              className="mt-12 inline-flex items-center gap-2 group cursor-pointer text-primary"
-            >
-              <span className="font-semibold text-lg">View Resume</span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover:translate-x-1">
-                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </motion.div>
           </motion.div>
         </div>
 
@@ -127,10 +132,10 @@ export default function About() {
 
                 {/* Social Links List */}
                 <div className="space-y-3">
-                  <SocialLink icon={Twitter} label="Twitter" handle="@pritam_dev" href="#" />
-                  <SocialLink icon={Linkedin} label="LinkedIn" handle="Pritam V." href="#" />
-                  <SocialLink icon={Dribbble} label="Dribbble" handle="pritam_design" href="#" />
-                  <SocialLink icon={Github} label="GitHub" handle="pritam-studio" href="#" />
+                  <SocialLink icon={XIcon} label="X/Twitter" handle="@Reven_172" href="https://x.com/Reven_172" />
+                  <SocialLink icon={Linkedin} label="LinkedIn" handle="pritam172" href="https://www.linkedin.com/in/pritam172/" />
+                  <SocialLink icon={Dribbble} label="Dribbble" handle="pritam-verma17647" href="https://dribbble.com/pritam-verma17647" />
+                  <SocialLink icon={Github} label="GitHub" handle="Musk172" href="https://github.com/Musk172" />
                 </div>
               </div>
             </HighlighterItem>

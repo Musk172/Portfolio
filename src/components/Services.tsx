@@ -5,6 +5,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowDown, ArrowUpRight, Cpu, Globe, LayoutGrid } from "lucide-react";
+import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
 
 const SERVICES = [
   {
@@ -163,7 +164,19 @@ function ServiceCard({
 export default function Services() {
   return (
     <section id="services" className="relative w-full bg-background">
-      <div className="container mx-auto px-6 md:px-12 py-24 md:py-32">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <AnimatedGridPattern
+          numSquares={30}
+          maxOpacity={0.1}
+          duration={3}
+          repeatDelay={1}
+          className={cn(
+            "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
+            "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12 opacity-50 z-0 text-primary"
+          )}
+        />
+      </div>
+      <div className="container mx-auto px-6 md:px-12 py-24 md:py-32 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Left editorial column */}
           <div className="lg:col-span-4 lg:sticky lg:top-28">
@@ -172,12 +185,12 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-10"
+              className="space-y-10 flex flex-col items-center lg:items-start text-center lg:text-left"
             >
               {/* Tag + CTA row */}
-              <div className="flex items-center justify-between gap-6">
+              <div className="flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
                 <div className="flex items-center gap-3">
-                  <span className="h-px w-8 bg-primary/60" />
+                  <span className="hidden lg:block h-px w-8 bg-primary/60" />
                   <p className="text-[10px] font-mono tracking-[0.32em] text-primary/80 uppercase">
                     My services
                   </p>
@@ -201,9 +214,9 @@ export default function Services() {
               </div>
 
               {/* Main heading */}
-              <div className="space-y-4">
+              <div className="space-y-4 flex flex-col items-center lg:items-start">
                 <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-[0.95]">
-                  WHAT I’M <br /> OFFERING
+                  WHAT I’M <br className="hidden lg:block" /> OFFERING
                 </h2>
                 <p className="text-foreground/55 text-sm md:text-base font-medium leading-relaxed max-w-md">
                   Opinionated, end‑to‑end services that combine product thinking, crisp UX, and reliable engineering.
@@ -240,8 +253,8 @@ export default function Services() {
           </div>
 
           {/* Right cards grid */}
-          <div className="lg:col-span-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7">
+          <div className="lg:col-span-8 w-full flex justify-end">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-6 w-full">
               <ServiceCard service={SERVICES[0]} featured />
               <ServiceCard service={SERVICES[1]} />
               <ServiceCard service={SERVICES[2]} />

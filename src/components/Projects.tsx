@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { HoverSlider, HoverSliderImage, HoverSliderImageWrap, TextStaggerHover } from "@/components/ui/animated-slideshow";
+import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
+import { cn } from "@/lib/utils";
 
 const SLIDES = [
   {
@@ -29,31 +31,43 @@ const SLIDES = [
 export default function Projects() {
   return (
     <section id="projects" className="relative min-h-screen py-24 md:py-32 bg-background z-20 overflow-x-visible">
-      <div className="container mx-auto px-6 md:px-12">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <AnimatedGridPattern
+          numSquares={30}
+          maxOpacity={0.1}
+          duration={3}
+          repeatDelay={1}
+          className={cn(
+            "[mask-image:radial-gradient(800px_circle_at_center,white,transparent)]",
+            "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12 opacity-50 z-0 text-primary"
+          )}
+        />
+      </div>
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
 
         {/* Modern Label */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="flex items-center gap-4 mb-16"
+          className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-2 md:gap-4 mb-12 md:mb-16 text-center md:text-left"
         >
-          <span className="h-[1px] w-12 bg-primary/40" />
+          <span className="hidden md:block h-[1px] w-12 bg-primary/40" />
           <h2 className="text-xs font-mono tracking-[0.3em] text-primary uppercase">Portfolio</h2>
         </motion.div>
 
         <HoverSlider className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-16 lg:gap-24 w-full">
 
           {/* Left Side: Headings & Slide Texts */}
-          <div className="w-full lg:w-1/2 flex flex-col space-y-12">
+          <div className="w-full lg:w-1/2 flex flex-col items-center md:items-start text-center md:text-left space-y-12">
             <motion.h3
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-2"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]"
             >
-              Selected <br />
-              <span className="text-primary italic font-serif">Works</span>.
+              Selected <br className="hidden md:block" />
+              <span className="text-primary italic font-serif z-10 relative">Works</span>.
             </motion.h3>
 
             <motion.p

@@ -61,17 +61,17 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        "relative w-72 cursor-pointer overflow-hidden rounded-3xl border p-6",
+        "relative w-64 md:w-72 cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl border p-4 md:p-6",
         "bg-surface/50 backdrop-blur-xl border-border hover:border-primary/50 transition-all duration-300",
         "shadow-lg shadow-black/5"
       )}
     >
       <div className="flex flex-row items-center gap-3 mb-4">
         <div className="relative h-10 w-10 overflow-hidden rounded-full border border-primary/20">
-           <NextImage 
-            className="rounded-full bg-primary/10 object-cover" 
-            alt={name} 
-            src={img} 
+          <NextImage
+            className="rounded-full bg-primary/10 object-cover"
+            alt={name}
+            src={img}
             fill
             sizes="40px"
           />
@@ -99,7 +99,7 @@ export default function Testimonials() {
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         {/* Section Header */}
         <div className="mb-16 md:mb-24 text-center">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -107,7 +107,7 @@ export default function Testimonials() {
           >
             Testimonials
           </motion.h2>
-          <motion.h3 
+          <motion.h3
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -120,13 +120,13 @@ export default function Testimonials() {
 
         {/* Marquee Container */}
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-          <Marquee pauseOnHover className="[--duration:40s] [--gap:1.5rem] py-4">
+          <Marquee pauseOnHover className="[--duration:40s] [--gap:1rem] md:[--gap:1.5rem] py-2 md:py-4">
             {firstRow.map((review) => (
               <ReviewCard key={review.username} {...review} />
             ))}
           </Marquee>
-          
-          <Marquee reverse pauseOnHover className="[--duration:35s] [--gap:1.5rem] py-4">
+
+          <Marquee reverse pauseOnHover className="[--duration:35s] [--gap:1rem] md:[--gap:1.5rem] py-2 md:py-4">
             {secondRow.map((review) => (
               <ReviewCard key={review.username} {...review} />
             ))}

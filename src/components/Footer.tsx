@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { Github, Youtube, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -13,27 +13,18 @@ export default function Footer() {
             Always open to discussing product design, creative development, 
             or partnership opportunities. Based worldwide.
           </p>
-          <a
-            href="mailto:hello@example.com"
-            className="inline-flex items-center justify-center px-8 py-4 text-sm font-medium transition-all rounded-full bg-foreground text-background hover:scale-105 active:scale-95"
-          >
-            Start a conversation
-          </a>
         </div>
 
         <div className="flex flex-col gap-6 w-full md:w-auto mt-8 md:mt-0">
           <div className="flex gap-6 items-center">
-            <a href="#" className="p-3 bg-background border border-border rounded-full hover:bg-foreground hover:text-background transition-colors dark:hover:text-black">
+            <a href="https://github.com/Musk172" target="_blank" rel="noopener noreferrer" className="p-3 bg-background border border-border rounded-full hover:bg-foreground hover:text-background transition-colors dark:hover:text-black">
               <Github size={20} />
             </a>
-            <a href="#" className="p-3 bg-background border border-border rounded-full hover:bg-foreground hover:text-background transition-colors dark:hover:text-black">
-              <Linkedin size={20} />
+            <a href="https://youtube.com/" target="_blank" rel="noopener noreferrer" className="p-3 bg-background border border-border rounded-full hover:bg-foreground hover:text-background transition-colors dark:hover:text-black">
+              <Youtube size={20} />
             </a>
-            <a href="#" className="p-3 bg-background border border-border rounded-full hover:bg-foreground hover:text-background transition-colors dark:hover:text-black">
-              <Twitter size={20} />
-            </a>
-            <a href="#" className="p-3 bg-background border border-border rounded-full hover:bg-foreground hover:text-background transition-colors dark:hover:text-black">
-              <Mail size={20} />
+            <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" className="p-3 bg-background border border-border rounded-full hover:bg-foreground hover:text-background transition-colors dark:hover:text-black">
+              <Instagram size={20} />
             </a>
           </div>
           <div className="text-sm font-mono text-foreground/50 text-left md:text-right mt-4">

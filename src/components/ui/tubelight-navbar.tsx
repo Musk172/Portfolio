@@ -33,11 +33,11 @@ export function NavBar({ items, className, activeTab: controlledActiveTab, onTab
   return (
     <div
       className={cn(
-        "fixed top-8 sm:top-8 md:top-11 z-[70] pointer-events-auto transition-all duration-500 ease-in-out left-1/2 -translate-x-1/2",
+        "fixed top-[30px] sm:top-8 md:top-11 z-[70] pointer-events-auto transition-all duration-500 ease-in-out left-1/2 -translate-x-1/2",
         className,
       )}
     >
-      <div className="flex items-center gap-2 md:gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+      <div className="flex items-center gap-2 md:gap-3 bg-background/50 border border-border backdrop-blur-xl py-1 px-1 rounded-full shadow-lg">
         {items.map((item) => {
           const Icon = item.icon
           const isActive = activeTab === item.name
@@ -51,7 +51,7 @@ export function NavBar({ items, className, activeTab: controlledActiveTab, onTab
                 onTabChange?.(item.name)
               }}
               className={cn(
-                "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
+                "relative cursor-pointer text-sm font-semibold px-4 py-2 sm:px-6 rounded-full transition-colors",
                 "text-foreground/80 hover:text-primary",
                 isActive && "bg-muted text-primary",
               )}

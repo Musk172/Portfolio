@@ -80,14 +80,14 @@ export default function Hero() {
 
         {/* Center Portrait Image */}
         <div
-          className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none overflow-hidden rounded-[2rem]"
+          className="absolute inset-0 z-10 flex items-start md:items-center justify-center pointer-events-none overflow-hidden rounded-[2rem]"
           style={{ perspective: 1000 }}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="relative w-full max-w-[800px] h-[80vh] md:h-[100vh] mt-12 md:mt-20 lg:mt-28"
+            className="relative w-full max-w-[800px] h-[65vh] md:h-[100vh] mt-4 sm:mt-8 md:mt-20 lg:mt-28"
             style={{
               y: finalImageY,
               x: parallaxX,
@@ -100,7 +100,7 @@ export default function Hero() {
               src="/hero-portrait.png"
               alt="Portrait"
               fill
-              className="object-contain md:object-cover object-bottom opacity-100 dark:opacity-80 mix-blend-darken dark:mix-blend-normal"
+              className="object-contain md:object-cover object-center md:object-bottom opacity-100 dark:opacity-80 mix-blend-darken dark:mix-blend-normal scale-[1.2] md:scale-100 origin-[50%_30%] md:origin-bottom"
               style={{
                 maskImage: "radial-gradient(ellipse at center, black 40%, transparent 70%)",
                 WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 70%)"
@@ -133,25 +133,25 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="scale-90 sm:scale-100 origin-left flex flex-wrap items-center gap-2 sm:gap-3"
+              className="scale-[0.85] sm:scale-100 origin-left flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3"
             >
               <LocationTag city="Rajasthan" country="India" timezone="IST" />
               <AvailabilityTag />
             </motion.div>
 
             <motion.h1
-              className="text-5xl sm:text-6xl md:text-[5.5vw] lg:text-[6vw] xl:text-[6.5vw] leading-[0.95] md:leading-[1] font-black font-sans uppercase tracking-tighter flex flex-col items-start"
+              className="text-[10vw] xs:text-5xl sm:text-6xl md:text-[5.5vw] lg:text-[6vw] xl:text-[6.5vw] leading-[1.1] sm:leading-[0.95] md:leading-[1] font-black font-sans uppercase tracking-tighter flex flex-col items-start"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="whitespace-nowrap flex items-center w-full">
-                BUILDING
+              <span className="flex flex-wrap sm:flex-nowrap items-center w-full gap-x-3 gap-y-1">
+                <span>BUILDING</span>
                 <GooeyText
                   texts={["IMMERSIVE", "DIGITAL", "SEAMLESS", "BETTER"]}
                   morphTime={1}
                   cooldownTime={1.5}
-                  className="w-[5.8em] h-[1.1em] ml-2 md:ml-4 -mt-[0.05em]"
+                  className="w-[5.8em] h-[1.1em] -mt-[0.05em] origin-left scale-90 sm:scale-100"
                   textClassName="text-primary text-left left-0 origin-left"
                 />
               </span>
@@ -169,7 +169,7 @@ export default function Hero() {
             >
               <MagneticButton>
                 <a
-                  href="#projects"
+                  href="#contact"
                   className="inline-block px-5 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-4 text-sm md:text-base bg-primary text-primary-foreground font-semibold rounded-full hover:scale-105 transition-transform active:scale-95 shadow-[0_0_30px_rgba(13,110,253,0.3)] hover:shadow-[0_0_50px_rgba(13,110,253,0.5)] whitespace-nowrap cursor-pointer"
                 >
                   Start Something Great →
