@@ -3,6 +3,7 @@
 import { motion, useAnimate, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Send, Mail, MapPin, Clock, LucideIcon, X, ArrowRight, ChevronDown } from "lucide-react";
+import { createPortal } from "react-dom";
 import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
 import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
@@ -150,9 +151,14 @@ const ContactInfoItem = ({ icon: Icon, title, content }: ContactInfoItemProps) =
 
 export default function Contact() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
-    <section id="contact" className="relative py-24 md:py-32 bg-background overflow-hidden">
+    <section id="contact" className="relative py-24 md:py-32 bg-background overflow-hidden relative z-20">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <AnimatedGridPattern
           numSquares={30}
@@ -296,86 +302,89 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Floating Contact Form Drawer/Modal */}
-      <AnimatePresence>
-        {isDrawerOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex justify-center items-end sm:items-center p-4 sm:p-6 bg-black/40 backdrop-blur-sm"
-            onClick={() => setIsDrawerOpen(false)}
-          >
+      {/* Floating Contact Form Drawer/Modal via React Portal */}
+      {mounted && createPortal(
+        <AnimatePresence>
+          {isDrawerOpen && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 40 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 40 }}
-              transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-[420px] bg-white dark:bg-[#111111] border border-black/5 dark:border-white/10 shadow-2xl rounded-[2.5rem] p-6 md:p-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[9999] flex justify-center items-end sm:items-center p-4 sm:p-6 bg-black/40 backdrop-blur-sm"
+              onClick={() => setIsDrawerOpen(false)}
             >
-              <div className="flex justify-end mb-2">
-                <button 
-                  onClick={() => setIsDrawerOpen(false)} 
-                  className="p-2 text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors"
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              <div className="space-y-4 md:space-y-5">
-                <div className="space-y-1.5">
-                  <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="Jane Smith" 
-                    className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white" 
-                  />
-                </div>
-                
-                <div className="space-y-1.5">
-                  <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Email</label>
-                  <input 
-                    type="email" 
-                    placeholder="jane@framer.com" 
-                    className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white" 
-                  />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 40 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 40 }}
+                transition={{ type: "spring", bounce: 0.3, duration: 0.5 }}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-[420px] bg-white dark:bg-[#111111] border border-black/5 dark:border-white/10 shadow-2xl rounded-[2.5rem] p-6 md:p-8"
+              >
+                <div className="flex justify-end mb-2">
+                  <button 
+                    onClick={() => setIsDrawerOpen(false)} 
+                    className="p-2 text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors"
+                  >
+                    <X size={18} />
+                  </button>
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Industry</label>
-                  <div className="relative">
-                    <select className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none text-black/70 dark:text-white/70 cursor-pointer">
-                      <option value="" disabled selected className="dark:bg-[#111111]">Select...</option>
-                      <option className="dark:bg-[#111111]">Technology</option>
-                      <option className="dark:bg-[#111111]">Design</option>
-                      <option className="dark:bg-[#111111]">E-Commerce</option>
-                      <option className="dark:bg-[#111111]">Other</option>
-                    </select>
-                    <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 pointer-events-none" />
+                <div className="space-y-4 md:space-y-5">
+                  <div className="space-y-1.5">
+                    <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Name</label>
+                    <input 
+                      type="text" 
+                      placeholder="Jane Smith" 
+                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white" 
+                    />
                   </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Message</label>
-                  <textarea 
-                    placeholder="Type your message" 
-                    rows={3}
-                    className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white resize-none" 
-                  />
-                </div>
-
-                <button className="mt-8 w-fit flex items-center gap-3 pr-5 pl-2 py-2 bg-[#0d6efd] hover:bg-[#0b5ed7] text-white rounded-full transition-colors group">
-                  <div className="bg-white text-[#0d6efd] rounded-full p-1.5 group-hover:scale-105 transition-transform">
-                    <ArrowRight size={16} strokeWidth={3} />
+                  
+                  <div className="space-y-1.5">
+                    <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Email</label>
+                    <input 
+                      type="email" 
+                      placeholder="jane@framer.com" 
+                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white" 
+                    />
                   </div>
-                  <span className="font-medium text-[13px] tracking-wide">Get a Solution</span>
-                </button>
-              </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Industry</label>
+                    <div className="relative">
+                      <select className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none text-black/70 dark:text-white/70 cursor-pointer" defaultValue="">
+                        <option value="" disabled className="dark:bg-[#111111]">Select...</option>
+                        <option className="dark:bg-[#111111]">Technology</option>
+                        <option className="dark:bg-[#111111]">Design</option>
+                        <option className="dark:bg-[#111111]">E-Commerce</option>
+                        <option className="dark:bg-[#111111]">Other</option>
+                      </select>
+                      <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Message</label>
+                    <textarea 
+                      placeholder="Type your message" 
+                      rows={3}
+                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white resize-none" 
+                    />
+                  </div>
+
+                  <button className="mt-8 w-fit flex items-center gap-3 pr-5 pl-2 py-2 bg-[#0d6efd] hover:bg-[#0b5ed7] text-white rounded-full transition-colors group">
+                    <div className="bg-white text-[#0d6efd] rounded-full p-1.5 group-hover:scale-105 transition-transform">
+                      <ArrowRight size={16} strokeWidth={3} />
+                    </div>
+                    <span className="font-medium text-[13px] tracking-wide">Get a Solution</span>
+                  </button>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }

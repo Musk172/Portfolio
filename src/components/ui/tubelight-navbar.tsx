@@ -33,7 +33,7 @@ export function NavBar({ items, className, activeTab: controlledActiveTab, onTab
   return (
     <div
       className={cn(
-        "fixed top-[30px] sm:top-8 md:top-11 z-[70] pointer-events-auto transition-all duration-500 ease-in-out left-1/2 -translate-x-1/2",
+        "z-[70] pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
         className,
       )}
     >

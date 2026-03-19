@@ -123,7 +123,7 @@ export default function Home() {
         <Navbar />
         <CustomCursor />
         <SocialSidebar />
-        <main className="relative z-10 w-full">
+        <main className="relative z-40 w-full">
           <Hero />
           <TechStack />
           <About />
