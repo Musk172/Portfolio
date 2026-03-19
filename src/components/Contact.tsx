@@ -2,7 +2,7 @@
 
 import { motion, useAnimate, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Send, Mail, MapPin, Clock, CheckCircle2, LucideIcon, X, ArrowRight, ChevronDown } from "lucide-react";
+import { Send, Mail, MapPin, Clock, LucideIcon, X, ArrowRight, ChevronDown } from "lucide-react";
 import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
 import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
@@ -111,7 +111,7 @@ const WhatsappIcon = ({ size = 24, className = "" }: { size?: number | string; c
   </svg>
 )
 
-const ContactSocialButton = ({ icon: Icon, href, target, rel, onClick }: { icon: any; href: string; target?: string; rel?: string; onClick?: (e: React.MouseEvent) => void }) => (
+const ContactSocialButton = ({ icon: Icon, href, target, rel, onClick }: { icon: React.ElementType; href: string; target?: string; rel?: string; onClick?: (e: React.MouseEvent) => void }) => (
   <motion.a
     href={href}
     target={target}

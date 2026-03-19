@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import ServicesBanner from "@/components/ServicesBanner";
-import { Github, Linkedin, Twitter, LucideIcon, ArrowUpRight, Dribbble } from "lucide-react";
+import { Github, Linkedin, ArrowUpRight, Dribbble } from "lucide-react";
 import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
 import Image from "next/image";
 import { useTheme } from "next-themes";
@@ -24,7 +24,7 @@ const XIcon = ({ size = 24, className = "" }: { size?: number | string; classNam
   </svg>
 )
 
-const SocialLink = ({ icon: Icon, label, handle, href }: { icon: any; label: string; handle: string; href: string }) => (
+const SocialLink = ({ icon: Icon, label, handle, href }: { icon: React.ElementType; label: string; handle: string; href: string }) => (
   <motion.a
     href={href}
     target="_blank"
