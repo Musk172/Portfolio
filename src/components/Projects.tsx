@@ -70,7 +70,7 @@ const SLIDES = [
         </p>
         <div>
           <strong>The Process:</strong> 
-          <p className="mt-2 text-black/70 dark:text-white/70">The defining feature of this build is its buttery-smooth "Scrollytelling" engine. Instead of relying on hardware-intensive real-time 3D, the project uses a highly optimized Canvas API approach. Hundreds of high-resolution frames are asynchronously preloaded. As the user naturally scrolls the page, GSAP calculates exact scroll percentages to draw the corresponding sequence onto an HTML5 canvas—creating a perfect, fluid 60FPS 3D product rotation seamlessly synced to their scroll speed.</p>
+          <p className="mt-2 text-black/70 dark:text-white/70">The defining feature of this build is its buttery-smooth &quot;Scrollytelling&quot; engine. Instead of relying on hardware-intensive real-time 3D, the project uses a highly optimized Canvas API approach. Hundreds of high-resolution frames are asynchronously preloaded. As the user naturally scrolls the page, GSAP calculates exact scroll percentages to draw the corresponding sequence onto an HTML5 canvas—creating a perfect, fluid 60FPS 3D product rotation seamlessly synced to their scroll speed.</p>
         </div>
         <div>
           <strong>Technologies Used:</strong>
@@ -91,11 +91,11 @@ const SLIDES = [
     content: (
       <div className="space-y-6">
         <p>
-          <strong>Overview:</strong> A highly interactive, premium landing page designed for G-Shock watches. The goal was to translate their rugged durability and high-tech precision into a digital experience, completely immersing the user in the "Engineered to Endure" mindset.
+          <strong>Overview:</strong> A highly interactive, premium landing page designed for G-Shock watches. The goal was to translate their rugged durability and high-tech precision into a digital experience, completely immersing the user in the &quot;Engineered to Endure&quot; mindset.
         </p>
         <div>
           <strong>The Process:</strong> 
-          <p className="mt-2 text-black/70 dark:text-white/70">The standout feature is the dynamic "scrollytelling" experience. A robust system was engineered to tie scroll position directly to an image sequence rendered on an HTML5 <code>&lt;canvas&gt;</code>. As the user scrubs through the "Engineering Exposed" section, the component uses linear interpolation (lerp) across preloaded frames. Combined with sticky positioning physics and custom Intersection Observer reveals, it creates the cinematic illusion of a tactile 3D teardown unfolding right before their eyes.</p>
+          <p className="mt-2 text-black/70 dark:text-white/70">The standout feature is the dynamic &quot;scrollytelling&quot; experience. A robust system was engineered to tie scroll position directly to an image sequence rendered on an HTML5 <code>&lt;canvas&gt;</code>. As the user scrubs through the &quot;Engineering Exposed&quot; section, the component uses linear interpolation (lerp) across preloaded frames. Combined with sticky positioning physics and custom Intersection Observer reveals, it creates the cinematic illusion of a tactile 3D teardown unfolding right before their eyes.</p>
         </div>
         <div>
           <strong>Technologies Used:</strong>
