@@ -2,7 +2,7 @@
 
 import { motion, useAnimate, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Send, Mail, MapPin, Clock, LucideIcon, X, ArrowRight, ChevronDown } from "lucide-react";
+import { Send, Mail, MapPin, Clock, LucideIcon, X, ArrowRight, ChevronDown, Loader2, Check } from "lucide-react";
 import { createPortal } from "react-dom";
 import { HighlighterItem, HighlightGroup, Particles } from "@/components/ui/highlighter";
 import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
@@ -152,10 +152,69 @@ const ContactInfoItem = ({ icon: Icon, title, content }: ContactInfoItemProps) =
 export default function Contact() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    industry: "",
+    message: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSend = async () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      alert("Please fill in all required fields (Name, Email, Message)");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "5ed865ee-eb45-4036-bfa2-03875c317ebf", // IMPORTANT: Add your Web3Forms access key here
+          subject: `New Collab Request from ${formData.name} - ${formData.industry || "General"}`,
+          from_name: formData.name,
+          ...formData,
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setSubmitStatus("success");
+        setTimeout(() => {
+          setIsDrawerOpen(false);
+          setFormData({ name: "", email: "", industry: "", message: "" });
+          setSubmitStatus("idle");
+        }, 2000);
+      } else {
+        console.error(result);
+        setSubmitStatus("error");
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      setSubmitStatus("error");
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-background overflow-hidden relative z-20">
@@ -335,8 +394,11 @@ export default function Contact() {
                     <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Name</label>
                     <input 
                       type="text" 
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       placeholder="Jane Smith" 
-                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white" 
+                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white pointer-events-auto" 
                     />
                   </div>
                   
@@ -344,20 +406,28 @@ export default function Contact() {
                     <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Email</label>
                     <input 
                       type="email" 
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       placeholder="jane@framer.com" 
-                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white" 
+                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white pointer-events-auto" 
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Industry</label>
-                    <div className="relative">
-                      <select className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none text-black/70 dark:text-white/70 cursor-pointer" defaultValue="">
+                    <div className="relative pointer-events-auto">
+                      <select 
+                        name="industry"
+                        value={formData.industry}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none text-black/70 dark:text-white/70 cursor-pointer pointer-events-auto"
+                      >
                         <option value="" disabled className="dark:bg-[#111111]">Select...</option>
-                        <option className="dark:bg-[#111111]">Technology</option>
-                        <option className="dark:bg-[#111111]">Design</option>
-                        <option className="dark:bg-[#111111]">E-Commerce</option>
-                        <option className="dark:bg-[#111111]">Other</option>
+                        <option value="Technology" className="dark:bg-[#111111]">Technology</option>
+                        <option value="Design" className="dark:bg-[#111111]">Design</option>
+                        <option value="E-Commerce" className="dark:bg-[#111111]">E-Commerce</option>
+                        <option value="Other" className="dark:bg-[#111111]">Other</option>
                       </select>
                       <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 pointer-events-none" />
                     </div>
@@ -366,17 +436,33 @@ export default function Contact() {
                   <div className="space-y-1.5">
                     <label className="text-[13px] font-medium text-black/60 dark:text-white/60 ml-2">Message</label>
                     <textarea 
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
                       placeholder="Type your message" 
                       rows={3}
-                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white resize-none" 
+                      className="w-full px-4 py-3 bg-black/5 dark:bg-white/5 border-none rounded-2xl text-sm outline-none focus:ring-2 focus:ring-primary/50 transition-all placeholder:text-black/30 dark:placeholder:text-white/30 text-black dark:text-white resize-none pointer-events-auto" 
                     />
                   </div>
 
-                  <button className="mt-8 w-fit flex items-center gap-3 pr-5 pl-2 py-2 bg-[#0d6efd] hover:bg-[#0b5ed7] text-white rounded-full transition-colors group">
+                  <button 
+                    type="button"
+                    onClick={handleSend}
+                    disabled={isSubmitting || submitStatus === "success"}
+                    className="mt-8 w-fit flex items-center gap-3 pr-5 pl-2 py-2 bg-[#0d6efd] hover:bg-[#0b5ed7] disabled:bg-[#0d6efd]/70 text-white rounded-full transition-colors group pointer-events-auto"
+                  >
                     <div className="bg-white text-[#0d6efd] rounded-full p-1.5 group-hover:scale-105 transition-transform">
-                      <ArrowRight size={16} strokeWidth={3} />
+                      {isSubmitting ? (
+                        <Loader2 size={16} strokeWidth={3} className="animate-spin" />
+                      ) : submitStatus === "success" ? (
+                        <Check size={16} strokeWidth={3} />
+                      ) : (
+                        <ArrowRight size={16} strokeWidth={3} />
+                      )}
                     </div>
-                    <span className="font-medium text-[13px] tracking-wide">Get a Solution</span>
+                    <span className="font-medium text-[13px] tracking-wide">
+                      {isSubmitting ? "Sending..." : submitStatus === "success" ? "Sent Successfully!" : "Get a Solution"}
+                    </span>
                   </button>
                 </div>
               </motion.div>

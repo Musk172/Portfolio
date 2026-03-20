@@ -7,55 +7,61 @@ import NextImage from "next/image";
 
 const REVIEWS = [
   {
-    name: "Sarah Jenkins",
-    username: "@sarahj",
+    name: "Aarav Sharma",
+    position: "CEO, NexaVenture",
     body: "An absolute pleasure to work with. Delivering not just code, but a complete vision. Our conversion rates increased by 40%.",
-    img: "https://avatar.vercel.sh/sarah",
+    img: "/avatars/aarav.png",
   },
   {
-    name: "Marcus Chen",
-    username: "@marcusc",
+    name: "Priya Patel",
+    position: "Marketing Director",
     body: "Incredible attention to detail and modern aesthetics. They took our vague concept and transformed it into a digital masterpiece.",
-    img: "https://avatar.vercel.sh/marcus",
+    img: "/avatars/priya.png",
   },
   {
-    name: "Emma Rodriguez",
-    username: "@emmar",
+    name: "Rohan Desai",
+    position: "Product Manager",
     body: "The performance optimization is unmatched. Our site now feels like a premium app rather than a standard webpage.",
-    img: "https://avatar.vercel.sh/emma",
+    img: "/avatars/rohan.png",
   },
   {
-    name: "Jack",
-    username: "@jack",
+    name: "Vikram Singh",
+    position: "CTO, FinEdge",
     body: "I've never seen anything like this before. It's amazing. I love the fluidity and the attention to detail.",
-    img: "https://avatar.vercel.sh/jack",
+    img: "/avatars/vikram.png",
   },
   {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is exactly what our brand needed to stand out.",
-    img: "https://avatar.vercel.sh/jill",
+    name: "Neha Gupta",
+    position: "Founder, Zenith Arts",
+    body: "I don't know what to say. I'm speechless. This is exactly what our brand needed to stand out and capture our audience.",
+    img: "/avatars/neha.png",
   },
   {
-    name: "John",
-    username: "@john",
+    name: "Siddharth Rao",
+    position: "VP of Engineering",
     body: "I'm at a loss for words. The animations, the layout, the speed—it's all world-class.",
-    img: "https://avatar.vercel.sh/john",
+    img: "/avatars/siddharth.png",
   },
+  {
+    name: "Ananya Joshi",
+    position: "Head of Marketing",
+    body: "Working with them was a game-changer for our online presence. Our traffic effectively doubled within a week.",
+    img: "/avatars/ananya.png",
+  }
 ];
 
-const firstRow = REVIEWS.slice(0, REVIEWS.length / 2);
-const secondRow = REVIEWS.slice(REVIEWS.length / 2);
+const firstRow = REVIEWS.slice(0, 3);
+const secondRow = REVIEWS.slice(3);
 
 const ReviewCard = ({
   img,
   name,
-  username,
+  position,
   body,
 }: {
   img: string;
   name: string;
-  username: string;
+  position: string;
   body: string;
 }) => {
   return (
@@ -80,7 +86,7 @@ const ReviewCard = ({
           <figcaption className="text-sm font-bold tracking-tight text-foreground">
             {name}
           </figcaption>
-          <p className="text-xs font-mono text-foreground/40">{username}</p>
+          <p className="text-xs font-medium text-primary mt-0.5">{position}</p>
         </div>
       </div>
       <blockquote className="text-sm leading-relaxed text-foreground/80 italic">
@@ -122,13 +128,13 @@ export default function Testimonials() {
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
           <Marquee pauseOnHover className="[--duration:40s] [--gap:1rem] md:[--gap:1.5rem] py-2 md:py-4">
             {firstRow.map((review) => (
-              <ReviewCard key={review.username} {...review} />
+              <ReviewCard key={review.name} {...review} />
             ))}
           </Marquee>
 
           <Marquee reverse pauseOnHover className="[--duration:35s] [--gap:1rem] md:[--gap:1.5rem] py-2 md:py-4">
             {secondRow.map((review) => (
-              <ReviewCard key={review.username} {...review} />
+              <ReviewCard key={review.name} {...review} />
             ))}
           </Marquee>
 
