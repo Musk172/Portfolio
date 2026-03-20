@@ -114,10 +114,27 @@ const SLIDES = [
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<typeof SLIDES[0] | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [lastTap, setLastTap] = useState<{ id: string; time: number } | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleProjectClick = (slide: typeof SLIDES[0]) => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      const now = Date.now();
+      const DOUBLE_TAP_DELAY = 400; 
+
+      if (lastTap && lastTap.id === slide.id && now - lastTap.time < DOUBLE_TAP_DELAY) {
+        setSelectedProject(slide);
+        setLastTap(null);
+      } else {
+        setLastTap({ id: slide.id, time: now });
+      }
+    } else {
+      setSelectedProject(slide);
+    }
+  };
 
   return (
     <section id="projects" className="relative min-h-screen py-24 md:py-32 bg-background z-20 overflow-x-visible">
@@ -172,7 +189,7 @@ export default function Projects() {
 
             <div className="flex flex-col items-start space-y-5 md:space-y-6">
               {SLIDES.map((slide, index) => (
-                <div key={slide.id} onClick={() => setSelectedProject(slide)} className="cursor-pointer group">
+                <div key={slide.id} onClick={() => handleProjectClick(slide)} className="cursor-pointer group select-none">
                   <TextStaggerHover
                     index={index}
                     className="text-2xl md:text-3xl lg:text-4xl font-sans font-bold uppercase tracking-tighter group-hover:text-primary transition-colors"
